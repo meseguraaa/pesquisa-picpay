@@ -1,63 +1,244 @@
+export const metadata = {
+  title: "PICPAY - Pesquisa",
+  icons: {
+    icon: "/assets/logo_picpay.png",
+  },
+};
+
 import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  SendHorizontal,
+  House,
+  FolderGit,
+  FileUp,
+  FileSliders,
+} from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="min-h-screen bg-white">
+      {/* HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center gap-3 h-16 px-4 bg-white shadow-sm">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+          src="/assets/logo_picpay.png"
+          alt="Logo PicPay"
+          width={32}
+          height={32}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <h1 className="text-3xl font-bold text-[#21C25E]">Pesquisa</h1>
+      </header>
+
+      {/* SIDEBAR (desktop/tablet) */}
+      <nav
+        aria-label="Menu lateral"
+        className="
+    group fixed left-0 top-0 z-40
+    hidden md:flex h-screen w-20 hover:w-56
+    flex-col pt-20
+    bg-white border-r
+    transition-all duration-300 ease-out
+    overflow-hidden cursor-pointer
+  "
+      >
+        <ul className="w-full space-y-2">
+          {[
+            { label: "Home", Icon: House },
+            { label: "Categoria", Icon: FolderGit },
+            { label: "Pesquisa", Icon: FileUp },
+            { label: "Relatório", Icon: FileSliders },
+          ].map(({ label, Icon }) => (
+            <li key={label}>
+              <a
+                className="
+            relative block w-full h-10 hover:bg-gray-100
+            transition-colors
+          "
+              >
+                {/* ÍCONE — fica sempre no MESMO lugar */}
+                <Icon
+                  className="
+              absolute top-1/2 -translate-y-1/2
+              left-[28px]  /* 28px = centro exato da sidebar fechada (80px) */
+              w-6 h-6 text-gray-700
+            "
+                />
+
+                {/* TEXTO — aparece ao lado, sem empurrar o ícone */}
+                <span
+                  className="
+              absolute top-1/2 -translate-y-1/2
+              left-16  /* 64px a partir da esquerda */
+              text-gray-800 font-medium
+              whitespace-nowrap
+              opacity-0 group-hover:opacity-100
+              transition-opacity duration-200
+            "
+                >
+                  {label}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* MAIN */}
+      <main className="pt-[84px] pb-20 md:pb-10 md:ml-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto space-y-10">
+          {/* Disponíveis */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">Disponíveis</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  img: "/assets/capa_pesquisa_01.png",
+                  title: "Pesquisa de Clima - 2025",
+                  category: "Clima Organizacional",
+                  description:
+                    "Avaliação anual da satisfação, engajamento e bem-estar dos colaboradores em 2025.",
+                  date: "01/12/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_02.png",
+                  title: "Primeira Liderança - T01",
+                  category: "Treinamento",
+                  description:
+                    "Desenvolvimento de novas lideranças e fortalecimento de competências de gestão.",
+                  date: "30/11/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_03.png",
+                  title: "NPS - PJ",
+                  category: "Serviços",
+                  description:
+                    "Avaliação da satisfação dos parceiros PJ com produtos e serviços oferecidos.",
+                  date: "31/12/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_04.png",
+                  title: "Treinamento AVD",
+                  category: "Treinamento",
+                  description:
+                    "Capacitação prática para aprimorar habilidades e desempenho em atividades diárias.",
+                  date: "30/03/2026",
+                },
+              ].map((card, index) => (
+                <Card
+                  key={index}
+                  className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+                >
+                  <CardContent className="p-3 rounded-[15px] overflow-hidden">
+                    <Image
+                      src={card.img}
+                      alt={card.title}
+                      width={800}
+                      height={450}
+                      className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
+                    />
+
+                    <div className="w-full space-y-2">
+                      <h3 className="text-xl font-normal text-black truncate">
+                        {card.title}
+                      </h3>
+
+                      {/* Categoria + Data */}
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full w-40 h-6 font-medium">
+                          {card.category}
+                        </span>
+                        <span className="text-black font-bold text-sm">
+                          {card.date}
+                        </span>
+                      </div>
+
+                      <p className="text-sm text-black font-normal line-clamp-2">
+                        {card.description}
+                      </p>
+
+                      <Button className="w-full mt-2 h-12 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                        Responder
+                        <SendHorizontal className="w-6 h-6 fill-current stroke-none text-white" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          {/* Respondidas */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">Respondidas</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                "/assets/capa_pesquisa_01.png",
+                "/assets/capa_pesquisa_02.png",
+                "/assets/capa_pesquisa_03.png",
+              ].map((img, index) => (
+                <Card
+                  key={index}
+                  className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+                >
+                  <CardContent className="p-3 rounded-[15px] overflow-hidden">
+                    <Image
+                      src={img}
+                      alt={`Pesquisa respondida ${index + 1}`}
+                      width={800}
+                      height={450}
+                      className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
+                    />
+                    <div className="w-full space-y-2">
+                      <h3 className="text-xl font-normal text-black truncate">
+                        Pesquisa Respondida
+                      </h3>
+                      <p className="text-sm text-black">
+                        Respondida em 00/00/0000 - 00:00
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          {/* Não respondidas dentro do prazo */}
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">
+              Não respondidas dentro do prazo
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                "/assets/capa_pesquisa_01.png",
+                "/assets/capa_pesquisa_02.png",
+                "/assets/capa_pesquisa_03.png",
+              ].map((img, index) => (
+                <Card
+                  key={index}
+                  className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+                >
+                  <CardContent className="p-3 rounded-[15px] overflow-hidden">
+                    <Image
+                      src={img}
+                      alt={`Pesquisa expirada ${index + 1}`}
+                      width={800}
+                      height={450}
+                      className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
+                    />
+                    <div className="w-full space-y-2">
+                      <h3 className="text-xl font-normal text-black truncate">
+                        Pesquisa Expirada
+                      </h3>
+                      <p className="text-sm text-black">
+                        Encerrada em 00/00/0000
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
         </div>
       </main>
     </div>
