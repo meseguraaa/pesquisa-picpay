@@ -7,7 +7,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "PICPAY - Pesquisa",
+  title: "Pesquisa de Clima - 2025 | PICPAY",
   icons: {
     icon: "/assets/logo_picpay.png",
   },

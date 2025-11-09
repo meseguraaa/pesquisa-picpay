@@ -1,11 +1,12 @@
+// app/page.tsx (App Router)
+
 export const metadata = {
   title: "PICPAY - Pesquisa",
-  icons: {
-    icon: "/assets/logo_picpay.png",
-  },
+  icons: { icon: "/assets/logo_picpay.png" },
 };
 
 import Image from "next/image";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +18,42 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const cards = [
+    {
+      img: "/assets/capa_pesquisa_01.png",
+      title: "Pesquisa de Clima - 2025",
+      category: "Clima Organizacional",
+      description:
+        "Avaliação anual da satisfação, engajamento e bem-estar dos colaboradores em 2025.",
+      date: "01/12/2025",
+      link: "/pesquisas/pesquisa-clima-2025", // destino do 1º card
+    },
+    {
+      img: "/assets/capa_pesquisa_02.png",
+      title: "Primeira Liderança - T01",
+      category: "Treinamento",
+      description:
+        "Desenvolvimento de novas lideranças e fortalecimento de competências de gestão.",
+      date: "30/11/2025",
+    },
+    {
+      img: "/assets/capa_pesquisa_03.png",
+      title: "NPS - PJ",
+      category: "Serviços",
+      description:
+        "Avaliação da satisfação dos parceiros PJ com produtos e serviços oferecidos.",
+      date: "31/12/2025",
+    },
+    {
+      img: "/assets/capa_pesquisa_04.png",
+      title: "Treinamento AVD",
+      category: "Treinamento",
+      description:
+        "Capacitação prática para aprimorar habilidades e desempenho em atividades diárias.",
+      date: "30/03/2026",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       {/* HEADER */}
@@ -33,14 +70,7 @@ export default function Home() {
       {/* SIDEBAR (desktop/tablet) */}
       <nav
         aria-label="Menu lateral"
-        className="
-    group fixed left-0 top-0 z-40
-    hidden md:flex h-screen w-20 hover:w-56
-    flex-col pt-20
-    bg-white border-r
-    transition-all duration-300 ease-out
-    overflow-hidden cursor-pointer
-  "
+        className="group fixed left-0 top-0 z-40 hidden md:flex h-screen w-20 hover:w-56 flex-col pt-20 bg-white border-r transition-all duration-300 ease-out overflow-hidden cursor-pointer"
       >
         <ul className="w-full space-y-2">
           {[
@@ -50,32 +80,9 @@ export default function Home() {
             { label: "Relatório", Icon: FileSliders },
           ].map(({ label, Icon }) => (
             <li key={label}>
-              <a
-                className="
-            relative block w-full h-10 hover:bg-gray-100
-            transition-colors
-          "
-              >
-                {/* ÍCONE — fica sempre no MESMO lugar */}
-                <Icon
-                  className="
-              absolute top-1/2 -translate-y-1/2
-              left-[28px]  /* 28px = centro exato da sidebar fechada (80px) */
-              w-6 h-6 text-gray-700
-            "
-                />
-
-                {/* TEXTO — aparece ao lado, sem empurrar o ícone */}
-                <span
-                  className="
-              absolute top-1/2 -translate-y-1/2
-              left-16  /* 64px a partir da esquerda */
-              text-gray-800 font-medium
-              whitespace-nowrap
-              opacity-0 group-hover:opacity-100
-              transition-opacity duration-200
-            "
-                >
+              <a className="relative block w-full h-10 hover:bg-gray-100 transition-colors">
+                <Icon className="absolute top-1/2 -translate-y-1/2 left-7 w-6 h-6 text-gray-700" />
+                <span className="absolute top-1/2 -translate-y-1/2 left-16 text-gray-800 font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   {label}
                 </span>
               </a>
@@ -91,40 +98,7 @@ export default function Home() {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Disponíveis</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  img: "/assets/capa_pesquisa_01.png",
-                  title: "Pesquisa de Clima - 2025",
-                  category: "Clima Organizacional",
-                  description:
-                    "Avaliação anual da satisfação, engajamento e bem-estar dos colaboradores em 2025.",
-                  date: "01/12/2025",
-                },
-                {
-                  img: "/assets/capa_pesquisa_02.png",
-                  title: "Primeira Liderança - T01",
-                  category: "Treinamento",
-                  description:
-                    "Desenvolvimento de novas lideranças e fortalecimento de competências de gestão.",
-                  date: "30/11/2025",
-                },
-                {
-                  img: "/assets/capa_pesquisa_03.png",
-                  title: "NPS - PJ",
-                  category: "Serviços",
-                  description:
-                    "Avaliação da satisfação dos parceiros PJ com produtos e serviços oferecidos.",
-                  date: "31/12/2025",
-                },
-                {
-                  img: "/assets/capa_pesquisa_04.png",
-                  title: "Treinamento AVD",
-                  category: "Treinamento",
-                  description:
-                    "Capacitação prática para aprimorar habilidades e desempenho em atividades diárias.",
-                  date: "30/03/2026",
-                },
-              ].map((card, index) => (
+              {cards.map((card, index) => (
                 <Card
                   key={index}
                   className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
@@ -157,10 +131,26 @@ export default function Home() {
                         {card.description}
                       </p>
 
-                      <Button className="w-full mt-2 h-12 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center justify-center gap-2 cursor-pointer">
-                        Responder
-                        <SendHorizontal className="w-6 h-6 fill-current stroke-none text-white" />
-                      </Button>
+                      {/* Botão do 1º card vira Link; demais ficam desabilitados (como antes) */}
+                      {index === 0 && card.link ? (
+                        <Button
+                          asChild
+                          className="w-full mt-2 h-12 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center justify-center gap-2"
+                        >
+                          <Link href={card.link}>
+                            Responder
+                            <SendHorizontal className="w-6 h-6 fill-current stroke-none text-white" />
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button
+                          disabled
+                          className="w-full mt-2 h-12 text-lg rounded-[10px] bg-gray-300 text-gray-600 cursor-not-allowed flex items-center justify-center gap-2"
+                        >
+                          Responder
+                          <SendHorizontal className="w-6 h-6" />
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -193,7 +183,7 @@ export default function Home() {
                       <h3 className="text-xl font-normal text-black truncate">
                         Pesquisa Respondida
                       </h3>
-                      <p className="text-sm text-black">
+                      <p className="text-sm text黑">
                         Respondida em 00/00/0000 - 00:00
                       </p>
                     </div>
