@@ -163,17 +163,29 @@ export default function Home() {
             <h2 className="text-2xl font-semibold mb-4">Respondidas</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                "/assets/capa_pesquisa_01.png",
-                "/assets/capa_pesquisa_02.png",
-                "/assets/capa_pesquisa_03.png",
-              ].map((img, index) => (
+                {
+                  img: "/assets/capa_pesquisa_01.png",
+                  date: "11/10/2025",
+                  time: "10:23",
+                },
+                {
+                  img: "/assets/capa_pesquisa_02.png",
+                  date: "01/10/2025",
+                  time: "09:57",
+                },
+                {
+                  img: "/assets/capa_pesquisa_03.png",
+                  date: "23/09/2025",
+                  time: "19:12",
+                },
+              ].map((card, index) => (
                 <Card
                   key={index}
                   className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
                 >
                   <CardContent className="p-3 rounded-[15px] overflow-hidden">
                     <Image
-                      src={img}
+                      src={card.img}
                       alt={`Pesquisa respondida ${index + 1}`}
                       width={800}
                       height={450}
@@ -183,8 +195,8 @@ export default function Home() {
                       <h3 className="text-xl font-normal text-black truncate">
                         Pesquisa Respondida
                       </h3>
-                      <p className="text-sm text黑">
-                        Respondida em 00/00/0000 - 00:00
+                      <p className="text-sm text-black">
+                        Respondida em {card.date} - {card.time}
                       </p>
                     </div>
                   </CardContent>
@@ -200,17 +212,26 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                "/assets/capa_pesquisa_01.png",
-                "/assets/capa_pesquisa_02.png",
-                "/assets/capa_pesquisa_03.png",
-              ].map((img, index) => (
+                {
+                  img: "/assets/capa_pesquisa_01.png",
+                  date: "08/09/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_02.png",
+                  date: "16/08/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_03.png",
+                  date: "30/07/2025",
+                },
+              ].map((card, index) => (
                 <Card
                   key={index}
                   className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
                 >
                   <CardContent className="p-3 rounded-[15px] overflow-hidden">
                     <Image
-                      src={img}
+                      src={card.img}
                       alt={`Pesquisa expirada ${index + 1}`}
                       width={800}
                       height={450}
@@ -221,7 +242,7 @@ export default function Home() {
                         Pesquisa Expirada
                       </h3>
                       <p className="text-sm text-black">
-                        Encerrada em 00/00/0000
+                        Encerrada em {card.date}
                       </p>
                     </div>
                   </CardContent>
