@@ -7,6 +7,7 @@ import {
   FileUp,
   FileSliders,
   ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
 
 export default function PesquisaClima2025() {
@@ -133,7 +134,18 @@ export default function PesquisaClima2025() {
           </div>
 
           {/* Botão */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center gap-4">
+            {/* Botão VOLTAR */}
+            <Button
+              asChild
+              className="px-8 py-6 text-lg rounded-[10px] border border-[#333333] bg-white text-[#333333] hover:bg-[#f2f2f2] transition-colors flex items-center gap-2"
+            >
+              <Link href="/">
+                <ArrowLeft className="w-5 h-5 text-[#333333]" /> Voltar
+              </Link>
+            </Button>
+
+            {/* Botão INICIAR */}
             <Button className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2">
               Iniciar <ArrowRight className="w-5 h-5" />
             </Button>

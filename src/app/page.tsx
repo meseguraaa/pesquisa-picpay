@@ -93,7 +93,7 @@ export default function Home() {
 
       {/* MAIN */}
       <main className="pt-[84px] pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto space-y-10">
+        <div className="max-w-5xl mx-auto space-y-10">
           {/* Disponíveis */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">Disponíveis</h2>
