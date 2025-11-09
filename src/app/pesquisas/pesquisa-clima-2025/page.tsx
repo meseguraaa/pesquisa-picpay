@@ -146,8 +146,13 @@ export default function PesquisaClima2025() {
             </Button>
 
             {/* Botão INICIAR */}
-            <Button className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2">
-              Iniciar <ArrowRight className="w-5 h-5" />
+            <Button
+              asChild
+              className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2"
+            >
+              <Link href="/pesquisas/pesquisa-clima-2025/formulario">
+                Iniciar <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
           </div>
         </div>
