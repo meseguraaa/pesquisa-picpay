@@ -54,13 +54,13 @@ export default function EncerramentoPesquisa() {
         <div className="max-w-5xl mx-auto bg-white">
           {/* Cabeçalho */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-3xl font-semibold">Pesquisa de Clima - 2025</h2>
+            <h2 className="text-3xl font-semibold">Primeira Liderança - T01</h2>
             <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
               <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Clima Organizacional
+                Treinamento
               </span>
               <span className="text-black font-semibold text-sm">
-                Até: 01/12/2026
+                Até: 07/12/2025
               </span>
             </div>
           </div>
@@ -68,33 +68,29 @@ export default function EncerramentoPesquisa() {
           {/* Texto */}
           <div className="space-y-4 text-black text-base leading-relaxed">
             <p>
-              Agradecemos por participar da Pesquisa de Clima - 2025. Sua
-              contribuição é essencial para o crescimento e fortalecimento da
-              nossa cultura organizacional.
+              Agradecemos por participar da pesquisa Primeira Liderança. Sua
+              contribuição é fundamental para aprimorarmos nossos programas de
+              desenvolvimento e fortalecer a cultura de liderança da empresa.
             </p>
 
             <p>
-              Cada resposta compartilhada nos ajuda a compreender melhor o que
-              está funcionando bem e onde podemos evoluir juntos. Nosso objetivo
-              é construir um ambiente de trabalho cada vez mais colaborativo,
-              acolhedor e inspirador, onde todos se sintam valorizados e
-              motivados a alcançar seu melhor potencial.
+              As respostas fornecidas ajudarão a identificar os principais
+              desafios, necessidades e oportunidades de crescimento dos novos
+              líderes, permitindo que possamos oferecer treinamentos e
+              ferramentas ainda mais eficazes.
             </p>
 
             <p>
-              Com base nos resultados, desenvolveremos planos de ação voltados
-              ao bem-estar, à comunicação e ao engajamento das equipes. A sua
-              voz faz a diferença — ela é o ponto de partida para melhorias
-              reais e duradouras. Obrigado por dedicar seu tempo e por
-              contribuir para que nossa empresa continue sendo um ótimo lugar
-              para trabalhar!
+              Nosso objetivo é formar líderes preparados para inspirar, engajar
+              e conduzir suas equipes com empatia, clareza e propósito.
             </p>
 
             <p>
-              A sua voz faz a diferença — ela é o ponto de partida para
-              melhorias reais e duradouras. Obrigado por dedicar seu tempo e por
-              contribuir para que nossa empresa continue sendo um ótimo lugar
-              para trabalhar!
+              Acreditamos que a liderança é um processo contínuo de aprendizado
+              e evolução, e sua participação é um passo importante nessa jornada
+              coletiva. Muito obrigado por dedicar seu tempo e compartilhar suas
+              percepções — juntos, construiremos uma liderança mais forte,
+              humana e transformadora.
             </p>
           </div>
 

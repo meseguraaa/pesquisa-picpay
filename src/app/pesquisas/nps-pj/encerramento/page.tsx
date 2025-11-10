@@ -54,13 +54,13 @@ export default function EncerramentoPesquisa() {
         <div className="max-w-5xl mx-auto bg-white">
           {/* Cabeçalho */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-3xl font-semibold">Pesquisa de Clima - 2025</h2>
+            <h2 className="text-3xl font-semibold">NPS - PJ</h2>
             <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
               <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Clima Organizacional
+                Serviços
               </span>
               <span className="text-black font-semibold text-sm">
-                Até: 01/12/2026
+                Até: 13/01/2026
               </span>
             </div>
           </div>
@@ -68,33 +68,23 @@ export default function EncerramentoPesquisa() {
           {/* Texto */}
           <div className="space-y-4 text-black text-base leading-relaxed">
             <p>
-              Agradecemos por participar da Pesquisa de Clima - 2025. Sua
-              contribuição é essencial para o crescimento e fortalecimento da
-              nossa cultura organizacional.
+              Agradecemos por dedicar seu tempo para responder à pesquisa NPS -
+              PJ.
             </p>
 
             <p>
-              Cada resposta compartilhada nos ajuda a compreender melhor o que
-              está funcionando bem e onde podemos evoluir juntos. Nosso objetivo
-              é construir um ambiente de trabalho cada vez mais colaborativo,
-              acolhedor e inspirador, onde todos se sintam valorizados e
-              motivados a alcançar seu melhor potencial.
+              Sua opinião é essencial para aprimorarmos continuamente a
+              qualidade dos nossos serviços e o relacionamento com nossos
+              parceiros. As informações compartilhadas nos ajudarão a entender
+              melhor suas necessidades, expectativas e desafios, permitindo que
+              possamos evoluir juntos e fortalecer nossa parceria.
             </p>
 
             <p>
-              Com base nos resultados, desenvolveremos planos de ação voltados
-              ao bem-estar, à comunicação e ao engajamento das equipes. A sua
-              voz faz a diferença — ela é o ponto de partida para melhorias
-              reais e duradouras. Obrigado por dedicar seu tempo e por
-              contribuir para que nossa empresa continue sendo um ótimo lugar
-              para trabalhar!
-            </p>
-
-            <p>
-              A sua voz faz a diferença — ela é o ponto de partida para
-              melhorias reais e duradouras. Obrigado por dedicar seu tempo e por
-              contribuir para que nossa empresa continue sendo um ótimo lugar
-              para trabalhar!
+              Nosso compromisso é oferecer experiências cada vez mais
+              consistentes, soluções eficazes e um atendimento de excelência.
+              Obrigado por fazer parte dessa jornada e por contribuir para o
+              nosso crescimento mútuo!
             </p>
           </div>
 

@@ -10,7 +10,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-export default function PesquisaClima2025() {
+export default function npsPJ() {
   return (
     <div className="min-h-screen bg-white">
       {/* HEADER */}
@@ -86,20 +86,20 @@ export default function PesquisaClima2025() {
         <div className="max-w-5xl mx-auto bg-white">
           {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-3xl font-semibold">Pesquisa de Clima - 2025</h2>
+            <h2 className="text-3xl font-semibold">NPS - PJ</h2>
             <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
               <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Clima Organizacional
+                Serviços
               </span>
               <span className="text-black font-semibold text-sm">
-                Até: 01/12/2026
+                Até: 13/01/2026
               </span>
             </div>
           </div>
 
           {/* Imagem */}
           <Image
-            src="/assets/capa_pesquisa_interna_01.png"
+            src="/assets/capa_pesquisa_interna_03.png"
             alt="Capa da Pesquisa"
             width={1200}
             height={189}
@@ -109,27 +109,22 @@ export default function PesquisaClima2025() {
           {/* Texto */}
           <div className="space-y-4 text-black text-base leading-relaxed">
             <p>
-              A Pesquisa de Clima - 2025 tem como objetivo compreender a
-              percepção dos colaboradores sobre o ambiente de trabalho, a
-              cultura organizacional e as práticas de gestão da empresa. Por
-              meio dessa iniciativa, buscamos identificar pontos fortes e
-              oportunidades de melhoria que contribuam para o desenvolvimento de
-              um ambiente mais colaborativo, inclusivo e motivador.
+              A pesquisa NPS - PJ tem como objetivo avaliar o nível de
+              satisfação e lealdade dos nossos parceiros Pessoa Jurídica (PJ) em
+              relação aos produtos, serviços e ao relacionamento com nossa
+              empresa.
             </p>
             <p>
-              A pesquisa abrange temas como comunicação interna, reconhecimento,
-              liderança, engajamento, equilíbrio entre vida pessoal e
-              profissional, além de condições de trabalho.
+              Por meio desta pesquisa, buscamos compreender como tem sido a
+              experiência dos nossos parceiros, identificar pontos fortes da
+              nossa atuação e reconhecer oportunidades de melhoria que possam
+              fortalecer nossa parceria.
             </p>
             <p>
-              Os resultados obtidos servirão de base para a construção de planos
-              de ação voltados ao bem-estar e à satisfação da equipe,
-              fortalecendo o comprometimento e a produtividade coletiva.
-            </p>
-            <p>
-              A participação de todos é fundamental para garantirmos um
-              diagnóstico preciso e promovermos uma cultura organizacional cada
-              vez mais saudável, transparente e alinhada aos valores da empresa.
+              As respostas coletadas serão fundamentais para aprimorar nossos
+              processos, atendimento e entrega de valor, garantindo que as
+              soluções oferecidas continuem alinhadas às necessidades e
+              expectativas dos nossos clientes corporativos.
             </p>
           </div>
 
@@ -150,7 +145,7 @@ export default function PesquisaClima2025() {
               asChild
               className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2"
             >
-              <Link href="/pesquisas/pesquisa-clima-2025/formulario">
+              <Link href="/pesquisas/nps-pj/formulario">
                 Iniciar <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>

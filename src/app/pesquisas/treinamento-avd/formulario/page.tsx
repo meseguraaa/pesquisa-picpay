@@ -9,24 +9,20 @@ import {
   FileUp,
   FileSliders,
   Check,
-  Star,
-  Frown,
-  Meh,
-  Smile,
-  Laugh,
   ArrowRight,
   ArrowLeft,
+  Star,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 /** ===== Tipos ===== */
-type TipoPergunta = "radioTexto" | "estrelas" | "nps";
+type TipoPergunta = "radioTexto" | "texto" | "estrelas";
 
 type Pergunta = {
   tipo: TipoPergunta;
   descricao: string;
   opcoes?: string[]; // para radioTexto
-  textoLabel?: string; // label do campo aberto (radioTexto)
+  textoLabel?: string; // se definido, o radio exige comentário
   maxEstrelas?: number; // para estrelas (default 5)
 };
 
@@ -36,88 +32,111 @@ type Bloco = {
 };
 
 type Resposta = {
-  // para radioTexto
-  opcao: number | null;
-  texto: string;
-  // para estrelas
-  estrelas: number | null; // 1..maxEstrelas
-  // para nps
-  nps: number | null; // 1..10
+  opcao: number | null; // radioTexto
+  texto: string; // radioTexto (se textoLabel) / texto
+  estrelas: number | null; // estrelas
 };
 
-/** ===== Blocos ===== */
+/** ===== Blocos (AVD) ===== */
 const blocos: Bloco[] = [
-  // Bloco 1 — igual ao que já tínhamos (rádio + texto)
   {
-    nome: "Liderança",
+    nome: "Avaliação Geral",
     perguntas: [
       {
         tipo: "radioTexto",
         descricao:
-          "Como você avalia a comunicação interna entre as equipes e a liderança na empresa?",
+          "Como você avalia a organização e a estrutura do treinamento AVD?",
+        opcoes: ["Excelente", "Boa", "Regular", "Insatisfatória"],
+        // sem textoLabel → não exige comentário
+      },
+      {
+        tipo: "radioTexto",
+        descricao:
+          "O conteúdo apresentado foi relevante e aplicável à sua rotina de trabalho?",
         opcoes: [
-          "Excelente – as informações são claras e circulam com facilidade.",
-          "Boa – há comunicação, mas pode melhorar em alguns pontos.",
-          "Regular – às vezes as informações chegam de forma incompleta ou tardia.",
-          "Ruim – a comunicação é falha e causa retrabalho ou desmotivação.",
+          "Totalmente aplicável",
+          "Parcialmente aplicável",
+          "Pouco aplicável",
+          "Nada aplicável",
         ],
-        textoLabel:
-          "Quais atitudes você considera mais importantes em um líder para inspirar sua equipe?",
+      },
+      {
+        tipo: "radioTexto",
+        descricao:
+          "A didática e a clareza do instrutor durante o treinamento foram:",
+        opcoes: ["Excelentes", "Boas", "Regulares", "Precárias"],
       },
     ],
   },
-  // Bloco 2 — Ambiente com Estrelas e NPS
   {
-    nome: "Ambiente",
+    nome: "Engajamento e Impacto",
     perguntas: [
       {
         tipo: "estrelas",
         descricao:
-          "Como você avalia o ambiente físico e as condições de trabalho no dia a dia?",
+          "Em uma escala de 1 a 5, como você avalia o seu nível de engajamento durante o treinamento? (1 = muito baixo | 5 = muito alto)",
         maxEstrelas: 5,
       },
       {
-        tipo: "nps",
+        tipo: "estrelas",
         descricao:
-          "Em uma escala de 1 a 10, qual o seu nível de satisfação geral com o ambiente de trabalho?",
+          "Em uma escala de 1 a 5, o quanto o treinamento contribuiu para o seu desenvolvimento profissional? (1 = não contribuiu | 5 = contribuiu muito)",
+        maxEstrelas: 5,
+      },
+    ],
+  },
+  {
+    nome: "Feedback e Sugestões",
+    perguntas: [
+      {
+        tipo: "texto",
+        descricao:
+          "Quais pontos você considera mais positivos no treinamento AVD?",
+      },
+      {
+        tipo: "texto",
+        descricao:
+          "Que melhorias você sugeriria para as próximas edições do treinamento?",
       },
     ],
   },
 ];
 
 /** ===== Helpers ===== */
-const initResposta = (p: Pergunta): Resposta => ({
+const initResposta = (): Resposta => ({
   opcao: null,
   texto: "",
   estrelas: null,
-  nps: null,
 });
 
 const isPerguntaValida = (p: Pergunta, r: Resposta) => {
   switch (p.tipo) {
     case "radioTexto":
-      return r.opcao !== null && r.texto.trim().length >= 3;
+      // Se houver textoLabel definido, exige opção + comentário ≥ 3
+      if (p.textoLabel && p.textoLabel.trim().length > 0) {
+        return r.opcao !== null && r.texto.trim().length >= 3;
+      }
+      // Senão, só exige uma opção marcada
+      return r.opcao !== null;
+    case "texto":
+      return r.texto.trim().length >= 3;
     case "estrelas":
       return r.estrelas !== null && r.estrelas >= 1;
-    case "nps":
-      return r.nps !== null && r.nps >= 1 && r.nps <= 10;
     default:
       return false;
   }
 };
 
-export default function FormularioPesquisaClima2025() {
-  /** ===== Estados ===== */
-  const [step, setStep] = useState(0); // índice do bloco atual
+export default function FormularioTreinamentoAVD() {
+  const [step, setStep] = useState(0);
   const [respostas, setRespostas] = useState<Resposta[][]>(
-    blocos.map((b) => b.perguntas.map(initResposta))
+    blocos.map((b) => b.perguntas.map(() => initResposta()))
   );
 
-  /** ===== Dados do bloco atual ===== */
   const perguntasAtuais = blocos[step].perguntas;
   const respostasAtuais = respostas[step];
 
-  /** ===== Validação do bloco atual ===== */
+  // validação do bloco atual
   const validasNoBloco = useMemo(() => {
     let ok = 0;
     for (let i = 0; i < perguntasAtuais.length; i++) {
@@ -128,14 +147,11 @@ export default function FormularioPesquisaClima2025() {
 
   const blocoValido = validasNoBloco === perguntasAtuais.length;
 
-  /** ===== Progresso total (animado) ===== */
-  // Cada bloco tem o mesmo peso
-  const porBloco = 100 / blocos.length;
-
-  // ✅ Progresso por bloco (sem parcial por pergunta)
+  /** ===== Progresso (≈33% por bloco) ===== */
+  const porBloco = 100 / blocos.length; // 3 blocos → ~33.33
   const progressoAlvo = useMemo(() => {
-    const blocosAnteriores = step * porBloco; // blocos 100% concluídos
-    const blocoAtual = blocoValido ? porBloco : 0; // só conta quando o bloco atual está válido
+    const blocosAnteriores = step * porBloco;
+    const blocoAtual = blocoValido ? porBloco : 0;
     return Math.round(blocosAnteriores + blocoAtual);
   }, [step, porBloco, blocoValido]);
 
@@ -145,14 +161,14 @@ export default function FormularioPesquisaClima2025() {
     const end = progressoAlvo;
     if (start === end) return;
 
-    const duration = 500; // ms
+    const duration = 500;
     let raf = 0;
     let startTime = 0;
 
     const animate = (ts: number) => {
       if (!startTime) startTime = ts;
       const t = Math.min(1, (ts - startTime) / duration);
-      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      const eased = 1 - Math.pow(1 - t, 3);
       const value = Math.round(start + (end - start) * eased);
       setProgress(value);
       if (t < 1) raf = requestAnimationFrame(animate);
@@ -163,7 +179,7 @@ export default function FormularioPesquisaClima2025() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progressoAlvo]);
 
-  // 👇 rola para o topo sempre que o bloco mudar
+  // rola para o topo sempre que o bloco mudar
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -174,10 +190,7 @@ export default function FormularioPesquisaClima2025() {
   const setResposta = (perguntaIndex: number, patch: Partial<Resposta>) => {
     setRespostas((prev) => {
       const next = prev.map((blocoResp) => blocoResp.slice());
-      next[step][perguntaIndex] = {
-        ...next[step][perguntaIndex],
-        ...patch,
-      };
+      next[step][perguntaIndex] = { ...next[step][perguntaIndex], ...patch };
       return next;
     });
   };
@@ -191,7 +204,7 @@ export default function FormularioPesquisaClima2025() {
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const v = e.target.value;
-    if (v.length > 500) return;
+    if (v.length > 1000) return;
     setResposta(perguntaIndex, { texto: v });
   };
 
@@ -199,35 +212,20 @@ export default function FormularioPesquisaClima2025() {
     setResposta(perguntaIndex, { estrelas: valor });
   };
 
-  const onChangeNps = (perguntaIndex: number, valor: number) => {
-    setResposta(perguntaIndex, { nps: valor });
-  };
-
-  /** ===== UI Helpers ===== */
-  const faceFor = (n: number) => {
-    // mapeia 1..10 para um ícone expressivo
-    if (n <= 2) return <Frown className="w-5 h-5" />;
-    if (n <= 4) return <Meh className="w-5 h-5" />;
-    if (n <= 7) return <Smile className="w-5 h-5" />;
-    return <Laugh className="w-5 h-5" />;
-  };
-
   const router = useRouter();
 
   const handleContinue = () => {
     if (!blocoValido) return;
-
     if (step < blocos.length - 1) {
       setStep((s) => s + 1);
     } else {
-      // Último bloco → encerra
-      router.push("/pesquisas/pesquisa-clima-2025/encerramento");
+      router.push("/pesquisas/treinamento-avd/encerramento");
     }
   };
 
   const handleVoltar = () => {
     if (step === 0) {
-      router.push("/pesquisas/pesquisa-clima-2025");
+      router.push("/pesquisas/treinamento-avd");
     } else {
       setStep((s) => s - 1);
     }
@@ -289,22 +287,19 @@ export default function FormularioPesquisaClima2025() {
           {/* Cabeçalho */}
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-3xl font-semibold">
-                Pesquisa de Clima - 2025
-              </h2>
+              <h2 className="text-3xl font-semibold">Treinamento AVD</h2>
               <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
                 <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                  Clima Organizacional
+                  Treinamento
                 </span>
                 <span className="text-black font-semibold text-sm">
-                  Até: 01/12/2026
+                  Até: 30/03/2026
                 </span>
               </div>
             </div>
 
-            {/* Progresso (animado) */}
+            {/* Progresso + Voltar */}
             <div className="mt-10">
-              {/* Botão Voltar */}
               <div className="flex items-center mb-4">
                 <button
                   onClick={handleVoltar}
@@ -338,11 +333,10 @@ export default function FormularioPesquisaClima2025() {
 
             {perguntasAtuais.map((p, i) => {
               const r = respostasAtuais[i];
-              const textoLen = r.texto.length;
-              const validaPerg = isPerguntaValida(p, r);
+              const isLast = i === perguntasAtuais.length - 1;
 
               return (
-                <div key={i} className="mb-10">
+                <div key={i}>
                   <p className="text-black text-sm leading-relaxed mb-4">
                     {p.descricao}
                   </p>
@@ -350,7 +344,6 @@ export default function FormularioPesquisaClima2025() {
                   {/* ===== TIPOS ===== */}
                   {p.tipo === "radioTexto" && (
                     <>
-                      {/* Alternativas (radio + Check Lucide) */}
                       <div className="space-y-3">
                         {p.opcoes!.map((label, optIndex) => (
                           <label
@@ -361,18 +354,13 @@ export default function FormularioPesquisaClima2025() {
                               type="radio"
                               name={`pergunta_${step}_${i}`}
                               checked={r.opcao === optIndex}
-                              onChange={() => onChangeRadio(i, optIndex)}
+                              onChange={() =>
+                                setResposta(i, { opcao: optIndex })
+                              }
                               className="peer sr-only"
                             />
                             <span
-                              className="
-                                mt-0.5 inline-flex h-5 w-5 items-center justify-center
-                                rounded-full border border-black bg-white
-                                transition-all duration-200
-                                peer-checked:bg-[#238662] peer-checked:border-[#238662]
-                                peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-[#21C25E]
-                                peer-checked:[&>svg]:opacity-100
-                              "
+                              className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full border border-black bg-white transition-all duration-200 peer-checked:bg-[#238662] peer-checked:border-[#238662] peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-[#21C25E] peer-checked:[&>svg]:opacity-100"
                               aria-hidden="true"
                             >
                               <Check
@@ -387,45 +375,27 @@ export default function FormularioPesquisaClima2025() {
                         ))}
                       </div>
 
-                      {/* Separador */}
-                      <div className="my-5 border-t border-dashed border-gray-500" />
-
-                      {/* Campo aberto */}
-                      <p className="text-black text-sm leading-relaxed mb-3">
-                        {p.textoLabel ??
-                          "Escreva um comentário complementar (mín. 3 caracteres)."}
-                      </p>
-
-                      <textarea
-                        id={`observacoes_${step}_${i}`}
-                        name={`observacoes_${step}_${i}`}
-                        rows={4}
-                        value={r.texto}
-                        onChange={(e) => onChangeTexto(i, e)}
-                        maxLength={500}
-                        className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
-                        placeholder="Digite seu texto"
-                      />
-
-                      {/* Aviso + contador */}
-                      <div className="mt-1 flex items-center justify-between text-xs">
-                        <span
-                          className={
-                            validaPerg
-                              ? "opacity-0 select-none"
-                              : "text-gray-500 transition-opacity"
-                          }
-                        >
-                          Selecione uma opção e escreva pelo menos 3 caracteres.
-                        </span>
-                        <span
-                          className={
-                            textoLen >= 500 ? "text-red-500" : "text-gray-500"
-                          }
-                        >
-                          {textoLen} / 500
-                        </span>
-                      </div>
+                      {/* Se houver textoLabel, mostra textarea e valida como radio+texto */}
+                      {p.textoLabel && (
+                        <>
+                          <div className="my-10 border-t border-dashed border-gray-500" />
+                          <p className="text-black text-sm leading-relaxed mb-3">
+                            {p.textoLabel}
+                          </p>
+                          <textarea
+                            id={`observacoes_${step}_${i}`}
+                            name={`observacoes_${step}_${i}`}
+                            rows={4}
+                            value={r.texto}
+                            onChange={(e) =>
+                              setResposta(i, { texto: e.target.value })
+                            }
+                            maxLength={1000}
+                            className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
+                            placeholder="Digite seu texto"
+                          />
+                        </>
+                      )}
                     </>
                   )}
 
@@ -441,22 +411,17 @@ export default function FormularioPesquisaClima2025() {
                             key={n}
                             type="button"
                             onClick={() => onChangeEstrelas(i, n)}
-                            className={`
-                              h-8 w-8 flex items-center justify-center rounded
-                              transition-colors
-                              ${active ? "" : "hover:bg-gray-100"}
-                            `}
+                            className={`h-8 w-8 flex items-center justify-center rounded transition-colors ${
+                              active ? "" : "hover:bg-gray-100"
+                            }`}
                             aria-label={`${n} estrela(s)`}
                           >
                             <Star
-                              className={`
-                                w-6 h-6
-                                ${
-                                  active
-                                    ? "fill-[#238662] stroke-[#238662]"
-                                    : "fill-white stroke-black"
-                                }
-                              `}
+                              className={`w-6 h-6 ${
+                                active
+                                  ? "fill-[#238662] stroke-[#238662]"
+                                  : "fill-white stroke-black"
+                              }`}
                               strokeWidth={2}
                             />
                           </button>
@@ -465,40 +430,25 @@ export default function FormularioPesquisaClima2025() {
                     </div>
                   )}
 
-                  {p.tipo === "nps" && (
-                    <div className="mt-2 grid grid-cols-5 sm:grid-cols-10 gap-2">
-                      {Array.from({ length: 10 }, (_, idx) => idx + 1).map(
-                        (n) => {
-                          const selected = r.nps === n;
-                          return (
-                            <button
-                              key={n}
-                              type="button"
-                              onClick={() => onChangeNps(i, n)}
-                              className={`
-                                group flex flex-col items-center justify-center gap-1 p-2 rounded-md border
-                                transition-colors
-                                ${
-                                  selected
-                                    ? "bg-[#238662] border-[#238662] text-white"
-                                    : "bg-white border-black text-black hover:bg-gray-100"
-                                }
-                              `}
-                              aria-label={`NPS ${n}`}
-                            >
-                              <span
-                                className={`
-                                  flex items-center justify-center h-6
-                                  ${selected ? "text-white" : "text-black"}
-                                `}
-                              >
-                                {faceFor(n)}
-                              </span>
-                              <span className="text-xs font-medium">{n}</span>
-                            </button>
-                          );
-                        }
-                      )}
+                  {p.tipo === "texto" && (
+                    <>
+                      <textarea
+                        id={`texto_${step}_${i}`}
+                        name={`texto_${step}_${i}`}
+                        rows={4}
+                        value={r.texto}
+                        onChange={(e) => onChangeTexto(i, e)}
+                        maxLength={1000}
+                        className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
+                        placeholder="Digite sua resposta (mín. 3 e máx. 1000 caracteres)"
+                      />
+                    </>
+                  )}
+
+                  {/* separador entre perguntas */}
+                  {!isLast && (
+                    <div className="py-10">
+                      <div className="w-full border-t border-dashed border-gray-400" />
                     </div>
                   )}
                 </div>
@@ -511,13 +461,11 @@ export default function FormularioPesquisaClima2025() {
             <button
               onClick={handleContinue}
               disabled={!blocoValido}
-              className={`w-full h-12 text-base rounded-[10px] transition-colors flex items-center justify-center gap-2
-      ${
-        blocoValido
-          ? "bg-[#333333] text-white hover:bg-[#222222] cursor-pointer"
-          : "bg-gray-300 text-gray-600 cursor-not-allowed"
-      }
-    `}
+              className={`w-full h-12 text-base rounded-[10px] transition-colors flex items-center justify-center gap-2 ${
+                blocoValido
+                  ? "bg-[#333333] text-white hover:bg-[#222222] cursor-pointer"
+                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
+              }`}
             >
               {step < blocos.length - 1 ? (
                 <>
