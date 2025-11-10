@@ -184,17 +184,20 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
-                  img: "/assets/capa_pesquisa_01.png",
+                  img: "/assets/capa_pesquisa_05.png",
+                  title: "Onboarding de Novos Colaboradores",
                   date: "11/10/2025",
                   time: "10:23",
                 },
                 {
-                  img: "/assets/capa_pesquisa_02.png",
+                  img: "/assets/capa_pesquisa_06.png",
+                  title: "Comunicação Interna",
                   date: "01/10/2025",
                   time: "09:57",
                 },
                 {
-                  img: "/assets/capa_pesquisa_03.png",
+                  img: "/assets/capa_pesquisa_07.png",
+                  title: "Saúde e Bem-Estar",
                   date: "23/09/2025",
                   time: "19:12",
                 },
@@ -206,14 +209,14 @@ export default function Home() {
                   <CardContent className="p-3 rounded-[15px] overflow-hidden">
                     <Image
                       src={card.img}
-                      alt={`Pesquisa respondida ${index + 1}`}
+                      alt={card.title}
                       width={800}
                       height={450}
                       className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
                     />
                     <div className="w-full space-y-2">
-                      <h3 className="text-xl font-normal text-black truncate">
-                        Pesquisa Respondida
+                      <h3 className="text-xl font-medium text-black leading-snug">
+                        {card.title}
                       </h3>
                       <p className="text-sm text-black">
                         Respondida em {card.date} - {card.time}
@@ -232,9 +235,21 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { img: "/assets/capa_pesquisa_01.png", date: "08/09/2025" },
-                { img: "/assets/capa_pesquisa_02.png", date: "16/08/2025" },
-                { img: "/assets/capa_pesquisa_03.png", date: "30/07/2025" },
+                {
+                  img: "/assets/capa_pesquisa_08.png",
+                  title: "Inovação e Melhoria Contínua",
+                  date: "08/09/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_09.png",
+                  title: "Atendimento ao Cliente",
+                  date: "16/08/2025",
+                },
+                {
+                  img: "/assets/capa_pesquisa_10.png",
+                  title: "Diversidade e Inclusão",
+                  date: "30/07/2025",
+                },
               ].map((card, index) => (
                 <Card
                   key={index}
@@ -243,14 +258,14 @@ export default function Home() {
                   <CardContent className="p-3 rounded-[15px] overflow-hidden">
                     <Image
                       src={card.img}
-                      alt={`Pesquisa expirada ${index + 1}`}
+                      alt={card.title}
                       width={800}
                       height={450}
                       className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
                     />
                     <div className="w-full space-y-2">
-                      <h3 className="text-xl font-normal text-black truncate">
-                        Pesquisa Expirada
+                      <h3 className="text-xl font-medium text-black leading-snug">
+                        {card.title}
                       </h3>
                       <p className="text-sm text-black">
                         Encerrada em {card.date}
