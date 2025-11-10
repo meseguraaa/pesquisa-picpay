@@ -65,6 +65,8 @@ const blocos: Bloco[] = [
         descricao:
           "A didática e a clareza do instrutor durante o treinamento foram:",
         opcoes: ["Excelentes", "Boas", "Regulares", "Precárias"],
+        // Para testar o campo aberto obrigatório, descomente a linha abaixo:
+        // textoLabel: "Comente brevemente sua avaliação (mín. 3 caracteres):",
       },
     ],
   },
@@ -204,7 +206,7 @@ export default function FormularioTreinamentoAVD() {
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const v = e.target.value;
-    if (v.length > 1000) return;
+    if (v.length > 500) return; // padronizado com 500
     setResposta(perguntaIndex, { texto: v });
   };
 
@@ -335,6 +337,18 @@ export default function FormularioTreinamentoAVD() {
               const r = respostasAtuais[i];
               const isLast = i === perguntasAtuais.length - 1;
 
+              const textoLen = r.texto.length;
+              const textoTrimLen = r.texto.trim().length;
+              const textoValido = textoTrimLen >= 3;
+
+              // Validação visual para o aviso, seguindo o segundo formulário:
+              const avisoSomeRadioTexto =
+                p.tipo === "radioTexto" && p.textoLabel
+                  ? r.opcao !== null && textoValido
+                  : true; // quando não exige texto, não mostra aviso
+
+              const avisoSomeTexto = p.tipo === "texto" ? textoValido : true;
+
               return (
                 <div key={i}>
                   <p className="text-black text-sm leading-relaxed mb-4">
@@ -354,9 +368,7 @@ export default function FormularioTreinamentoAVD() {
                               type="radio"
                               name={`pergunta_${step}_${i}`}
                               checked={r.opcao === optIndex}
-                              onChange={() =>
-                                setResposta(i, { opcao: optIndex })
-                              }
+                              onChange={() => onChangeRadio(i, optIndex)}
                               className="peer sr-only"
                             />
                             <span
@@ -375,25 +387,47 @@ export default function FormularioTreinamentoAVD() {
                         ))}
                       </div>
 
-                      {/* Se houver textoLabel, mostra textarea e valida como radio+texto */}
+                      {/* Campo aberto apenas quando houver textoLabel */}
                       {p.textoLabel && (
                         <>
-                          <div className="my-10 border-t border-dashed border-gray-500" />
+                          <div className="my-5 border-t border-dashed border-gray-500" />
+
                           <p className="text-black text-sm leading-relaxed mb-3">
                             {p.textoLabel}
                           </p>
+
                           <textarea
                             id={`observacoes_${step}_${i}`}
                             name={`observacoes_${step}_${i}`}
                             rows={4}
                             value={r.texto}
-                            onChange={(e) =>
-                              setResposta(i, { texto: e.target.value })
-                            }
-                            maxLength={1000}
+                            onChange={(e) => onChangeTexto(i, e)}
+                            maxLength={500}
                             className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
                             placeholder="Digite seu texto"
                           />
+
+                          <div className="mt-1 flex items-center justify-between text-xs">
+                            <span
+                              className={
+                                avisoSomeRadioTexto
+                                  ? "opacity-0 select-none"
+                                  : "text-gray-600 transition-opacity"
+                              }
+                            >
+                              Selecione uma opção e escreva pelo menos 3
+                              caracteres.
+                            </span>
+                            <span
+                              className={
+                                textoLen >= 500
+                                  ? "text-red-500"
+                                  : "text-gray-600"
+                              }
+                            >
+                              {textoLen} / 500
+                            </span>
+                          </div>
                         </>
                       )}
                     </>
@@ -432,16 +466,36 @@ export default function FormularioTreinamentoAVD() {
 
                   {p.tipo === "texto" && (
                     <>
+                      {/* Mantemos o mesmo padrão visual do segundo formulário */}
                       <textarea
                         id={`texto_${step}_${i}`}
                         name={`texto_${step}_${i}`}
                         rows={4}
                         value={r.texto}
                         onChange={(e) => onChangeTexto(i, e)}
-                        maxLength={1000}
+                        maxLength={500}
                         className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
-                        placeholder="Digite sua resposta (mín. 3 e máx. 1000 caracteres)"
+                        placeholder="Digite sua resposta (mín. 3 caracteres)"
                       />
+
+                      <div className="mt-1 flex items-center justify-between text-xs">
+                        <span
+                          className={
+                            avisoSomeTexto
+                              ? "opacity-0 select-none"
+                              : "text-gray-600 transition-opacity"
+                          }
+                        >
+                          Escreva pelo menos 3 caracteres.
+                        </span>
+                        <span
+                          className={
+                            textoLen >= 500 ? "text-red-500" : "text-gray-600"
+                          }
+                        >
+                          {textoLen} / 500
+                        </span>
+                      </div>
                     </>
                   )}
 

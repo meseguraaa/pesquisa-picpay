@@ -416,7 +416,7 @@ export default function FormularioPesquisaClima2025() {
                               : "text-gray-500 transition-opacity"
                           }
                         >
-                          Selecione uma opção e escreva pelo menos 3 caracteres.
+                          Escreva pelo menos 3 caracteres.
                         </span>
                         <span
                           className={
