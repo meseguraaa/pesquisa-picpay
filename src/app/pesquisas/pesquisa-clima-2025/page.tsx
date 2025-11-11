@@ -13,76 +13,9 @@ import {
 export default function PesquisaClima2025() {
   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center gap-3 h-16 px-4 bg-white shadow-sm">
-        <Image
-          src="/assets/logo_picpay.png"
-          alt="Logo PicPay"
-          width={32}
-          height={32}
-        />
-        <h1 className="text-3xl font-bold text-[#21C25E]">Pesquisa</h1>
-      </header>
-
-      {/* SIDEBAR */}
-      <nav
-        aria-label="Menu lateral"
-        className="
-          group fixed left-0 top-0 z-40
-          hidden md:flex h-screen w-20 hover:w-56
-          flex-col pt-20
-          bg-white border-r
-          transition-all duration-300 ease-out
-          overflow-hidden cursor-pointer
-        "
-      >
-        <ul className="w-full space-y-2">
-          {[
-            { label: "Home", Icon: House, href: "/" },
-            { label: "Categoria", Icon: FolderGit },
-            { label: "Pesquisa", Icon: FileUp },
-            { label: "Relatório", Icon: FileSliders },
-          ].map(({ label, Icon, href }) => (
-            <li key={label}>
-              {href ? (
-                <Link
-                  href={href}
-                  className="relative block w-full h-10 hover:bg-gray-100 transition-colors"
-                >
-                  <Icon className="absolute top-1/2 -translate-y-1/2 left-7 w-6 h-6 text-gray-700" />
-                  <span
-                    className="
-                      absolute top-1/2 -translate-y-1/2 left-16
-                      text-gray-800 font-medium whitespace-nowrap
-                      opacity-0 group-hover:opacity-100
-                      transition-opacity duration-200
-                    "
-                  >
-                    {label}
-                  </span>
-                </Link>
-              ) : (
-                <a className="relative block w-full h-10 hover:bg-gray-100 transition-colors">
-                  <Icon className="absolute top-1/2 -translate-y-1/2 left-7 w-6 h-6 text-gray-700" />
-                  <span
-                    className="
-                      absolute top-1/2 -translate-y-1/2 left-16
-                      text-gray-800 font-medium whitespace-nowrap
-                      opacity-0 group-hover:opacity-100
-                      transition-opacity duration-200
-                    "
-                  >
-                    {label}
-                  </span>
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-      </nav>
 
       {/* MAIN */}
-      <main className="pt-[84px] pb-20 md:pb-10 md:ml-20 px-4 bg-white">
+      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto bg-white">
           {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

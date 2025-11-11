@@ -120,3 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+.sidebar .hover-bg {
+  width: 0;
+  opacity: 0;
+  transition: width 300ms ease, opacity 200ms ease;
+}
+
+.sidebar:hover .sidebar-item:hover .hover-bg {
+  width: 100%;
+  opacity: 1;
+}

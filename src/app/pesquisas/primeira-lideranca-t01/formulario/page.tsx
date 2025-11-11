@@ -270,16 +270,6 @@ export default function FormularioPrimeiraLiderancaT01() {
   /** ===== Render ===== */
   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center gap-3 h-16 px-4 bg-white shadow-sm">
-        <Image
-          src="/assets/logo_picpay.png"
-          alt="Logo PicPay"
-          width={32}
-          height={32}
-        />
-        <h1 className="text-3xl font-bold text-[#21C25E]">Pesquisa</h1>
-      </header>
 
       {/* SIDEBAR */}
       <nav
@@ -318,7 +308,7 @@ export default function FormularioPrimeiraLiderancaT01() {
       </nav>
 
       {/* MAIN */}
-      <main className="pt-[84px] pb-20 md:pb-10 md:ml-20 px-4 bg-white">
+      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto bg-white">
           {/* Cabeçalho */}
           <div className="mb-8">
