@@ -10,26 +10,22 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
-export default function PesquisaClima2025() {
+export default function TreinamentoAVD() {
   return (
     <PageMain>
       {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
-      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-2xl font-semibold">Primeira Liderança - T01</h2>
-        <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-          <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-            Treinamento
-          </span>
-          <span className="text-black font-semibold text-sm">
-            Até: 07/12/2025
-          </span>
-        </div>
-      </div>
+      <SurveyHeader
+                          title="Treinamento AVD"
+                          category="Treinamento"
+                          categoryVariant="clima"
+                          deadline="30/03/2026"
+                        />
 
       {/* Imagem */}
       <Image
-        src="/assets/capa_pesquisa_interna_02.png"
+        src="/assets/capa_pesquisa_interna_04.png"
         alt="Capa da Pesquisa"
         width={1200}
         height={189}
@@ -79,7 +75,7 @@ export default function PesquisaClima2025() {
           asChild
           className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2"
         >
-          <Link href="/pesquisas/primeira-lideranca-t01/formulario">
+          <Link href="/pesquisas-colaborador/treinamento-avd/formulario">
             Iniciar <ArrowRight className="w-5 h-5" />
           </Link>
         </Button>

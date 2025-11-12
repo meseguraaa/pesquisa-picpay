@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { House, FolderGit, FileUp, FileSliders, FileInput } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 export default function EncerramentoPesquisa() {
   const router = useRouter();
@@ -13,17 +14,12 @@ export default function EncerramentoPesquisa() {
   return (
     <PageMain>
       {/* Cabeçalho */}
-      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-2xl font-semibold">NPS - PJ</h2>
-        <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-          <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-            Serviços
-          </span>
-          <span className="text-black font-semibold text-sm">
-            Até: 13/01/2026
-          </span>
-        </div>
-      </div>
+      <SurveyHeader
+                    title="NPS - PJ"
+                    category="Serviços"
+                    categoryVariant="clima"
+                    deadline="13/01/2026"
+                  />
 
       {/* Texto */}
       <div className="space-y-4 text-black text-base leading-relaxed">

@@ -10,22 +10,18 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 export default function PesquisaClima2025() {
   return (
     <PageMain>
           {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-2xl font-semibold">Pesquisa de Clima - 2025</h2>
-            <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-              <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Clima Organizacional
-              </span>
-              <span className="text-black font-semibold text-sm">
-                Até: 01/12/2026
-              </span>
-            </div>
-          </div>
+           <SurveyHeader
+        title="Pesquisa de Clima - 2025"
+        category="Clima Organizacional"
+        categoryVariant="clima"
+        deadline="01/12/2026"
+      />
 
           {/* Imagem */}
           <Image
@@ -80,7 +76,7 @@ export default function PesquisaClima2025() {
               asChild
               className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2"
             >
-              <Link href="/pesquisas/pesquisa-clima-2025/formulario">
+              <Link href="/pesquisas-colaborador/pesquisa-clima-2025/formulario">
                 Iniciar <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>

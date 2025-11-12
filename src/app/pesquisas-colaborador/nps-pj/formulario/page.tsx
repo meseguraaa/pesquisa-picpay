@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 /** ===== Tipos ===== */
 type TipoPergunta = "nps";
@@ -137,11 +138,11 @@ export default function FormularioPesquisaClima2025() {
 
   const handleFinalizar = () => {
     if (!blocoValido) return;
-    router.push("/pesquisas/nps-pj/encerramento");
+    router.push("/pesquisas-colaborador/nps-pj/encerramento");
   };
 
   const handleVoltar = () => {
-    router.push("/pesquisas/nps-pj");
+    router.push("/pesquisas-colaborador/nps-pj");
   };
 
   /** ===== Render ===== */
@@ -149,17 +150,12 @@ export default function FormularioPesquisaClima2025() {
     <PageMain>
       {/* Cabeçalho */}
       <div className="mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-2xl font-semibold">NPS - PJ</h2>
-          <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-            <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-              Serviços
-            </span>
-            <span className="text-black font-semibold text-sm">
-              Até: 13/01/2026
-            </span>
-          </div>
-        </div>
+        <SurveyHeader
+                      title="NPS - PJ"
+                      category="Serviços"
+                      categoryVariant="clima"
+                      deadline="13/01/2026"
+                    />
 
         {/* Progresso (0 → 100 quando seleciona NPS) */}
         <div className="mt-10">
@@ -191,7 +187,7 @@ export default function FormularioPesquisaClima2025() {
 
       {/* ===== Bloco único NPS ===== */}
       <section className="bg-white mt-10">
-        <h3 className="text-xl font-semibold text-black mb-2">
+        <h3 className="text-xl font-semibold text-black mb-10">
           {blocos[step].nome}
         </h3>
 

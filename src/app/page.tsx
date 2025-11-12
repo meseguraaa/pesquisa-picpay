@@ -15,7 +15,7 @@ export default function Home() {
       description:
         "Avaliação anual da satisfação, engajamento e bem-estar dos colaboradores em 2025.",
       date: "01/12/2025",
-      link: "/pesquisas/pesquisa-clima-2025",
+      link: "/pesquisas-colaborador/pesquisa-clima-2025",
     },
     {
       id: "primeira-lideranca-t01",
@@ -25,7 +25,7 @@ export default function Home() {
       description:
         "Desenvolvimento de novas lideranças e fortalecimento de competências de gestão.",
       date: "07/12/2025",
-      link: "/pesquisas/primeira-lideranca-t01",
+      link: "/pesquisas-colaborador/primeira-lideranca-t01",
     },
     {
       id: "nps-pj",
@@ -35,7 +35,7 @@ export default function Home() {
       description:
         "Avaliação da satisfação dos parceiros PJ com produtos e serviços oferecidos.",
       date: "13/01/2026",
-      link: "/pesquisas/nps-pj",
+      link: "/pesquisas-colaborador/nps-pj",
     },
     {
       id: "treinamento-avd",
@@ -45,7 +45,7 @@ export default function Home() {
       description:
         "Capacitação prática para aprimorar habilidades e desempenho em atividades diárias.",
       date: "30/03/2026",
-      link: "/pesquisas/treinamento-avd",
+      link: "/pesquisas-colaborador/treinamento-avd",
     },
   ];
 

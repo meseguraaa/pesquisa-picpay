@@ -61,7 +61,7 @@ export default function CategoriasPage() {
             </h1>
             <div className="flex items-center justify-between text-left">
               <p className="text-black">
-                Crie as categorias que serão associadas às pesquisas.
+                Crie as categorias que serão associadas às pesquisas-colaborador.
               </p>
               <Button
                 onClick={handleAdicionar}

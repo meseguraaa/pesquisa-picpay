@@ -11,18 +11,21 @@ import {
   Check,
   ArrowRight,
   ArrowLeft,
+  Star,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 /** ===== Tipos ===== */
-type TipoPergunta = "radioTexto" | "texto";
+type TipoPergunta = "radioTexto" | "texto" | "estrelas";
 
 type Pergunta = {
   tipo: TipoPergunta;
   descricao: string;
   opcoes?: string[]; // para radioTexto
-  textoLabel?: string; // label do campo aberto (se quiser customizar)
+  textoLabel?: string; // se definido, o radio exige comentário
+  maxEstrelas?: number; // para estrelas (default 5)
 };
 
 type Bloco = {
@@ -32,119 +35,72 @@ type Bloco = {
 
 type Resposta = {
   opcao: number | null; // radioTexto
-  texto: string; // radioTexto / texto
+  texto: string; // radioTexto (se textoLabel) / texto
+  estrelas: number | null; // estrelas
 };
 
-/** ===== Blocos ===== */
+/** ===== Blocos (AVD) ===== */
 const blocos: Bloco[] = [
   {
-    nome: "Autoconhecimento e Desenvolvimento Pessoal",
+    nome: "Avaliação Geral",
     perguntas: [
       {
         tipo: "radioTexto",
         descricao:
-          "Como você avalia seu preparo para assumir responsabilidades de liderança?",
-        opcoes: [
-          "Muito preparado(a)",
-          "Parcialmente preparado(a)",
-          "Pouco preparado(a)",
-          "Não me sinto preparado(a)",
-        ],
-        textoLabel:
-          "Se quiser, descreva rapidamente um ponto forte ou algo a desenvolver (mín. 3 caracteres).",
+          "Como você avalia a organização e a estrutura do treinamento AVD?",
+        opcoes: ["Excelente", "Boa", "Regular", "Insatisfatória"],
+        // sem textoLabel → não exige comentário
       },
       {
         tipo: "radioTexto",
         descricao:
-          "Com que frequência você busca feedback sobre seu desempenho profissional?",
-        opcoes: ["Sempre", "Frequentemente", "Raramente", "Nunca"],
-        textoLabel:
-          "Comente brevemente como costuma pedir/receber feedback (mín. 3 caracteres).",
+          "O conteúdo apresentado foi relevante e aplicável à sua rotina de trabalho?",
+        opcoes: [
+          "Totalmente aplicável",
+          "Parcialmente aplicável",
+          "Pouco aplicável",
+          "Nada aplicável",
+        ],
       },
       {
         tipo: "radioTexto",
         descricao:
-          "O quanto você acredita que entende seu estilo de liderança e seus impactos na equipe?",
-        opcoes: [
-          "Completamente",
-          "Parcialmente",
-          "Pouco",
-          "Não tenho clareza sobre isso",
-        ],
-        textoLabel: "Se desejar, dê um exemplo (mín. 3 caracteres).",
+          "A didática e a clareza do instrutor durante o treinamento foram:",
+        opcoes: ["Excelentes", "Boas", "Regulares", "Precárias"],
+        // Para testar o campo aberto obrigatório, descomente a linha abaixo:
+        // textoLabel: "Comente brevemente sua avaliação (mín. 3 caracteres):",
       },
     ],
   },
   {
-    nome: "Comunicação e Relacionamento",
+    nome: "Engajamento e Impacto",
     perguntas: [
       {
-        tipo: "radioTexto",
+        tipo: "estrelas",
         descricao:
-          "Como você avalia sua capacidade de se comunicar de forma clara e assertiva com a equipe?",
-        opcoes: ["Excelente", "Boa", "Regular", "Precisa melhorar"],
-        textoLabel: "Escreva um exemplo prático (mín. 3 caracteres).",
+          "Em uma escala de 1 a 5, como você avalia o seu nível de engajamento durante o treinamento? (1 = muito baixo | 5 = muito alto)",
+        maxEstrelas: 5,
       },
       {
-        tipo: "radioTexto",
-        descricao: "Quando há conflitos na equipe, como você costuma agir?",
-        opcoes: [
-          "Enfrento o problema de forma direta e construtiva",
-          "Busco mediar o conflito, mas evito confrontos",
-          "Deixo que os envolvidos resolvam sozinhos",
-          "Evito me envolver",
-        ],
-        textoLabel: "Se quiser, descreva uma situação (mín. 3 caracteres).",
+        tipo: "estrelas",
+        descricao:
+          "Em uma escala de 1 a 5, o quanto o treinamento contribuiu para o seu desenvolvimento profissional? (1 = não contribuiu | 5 = contribuiu muito)",
+        maxEstrelas: 5,
       },
     ],
   },
   {
-    nome: "Gestão de Pessoas e Resultados",
+    nome: "Feedback e Sugestões",
     perguntas: [
       {
-        tipo: "radioTexto",
-        descricao: "Como você define suas prioridades e metas com a equipe?",
-        opcoes: [
-          "De forma colaborativa, envolvendo todos",
-          "Defino e comunico as metas sozinho(a)",
-          "Recebo as metas e apenas as repasso",
-          "As metas não são claramente definidas",
-        ],
-        textoLabel:
-          "Comente rapidamente como acompanha as metas (mín. 3 caracteres).",
-      },
-      {
-        tipo: "radioTexto",
+        tipo: "texto",
         descricao:
-          "Com que frequência você reconhece o bom desempenho dos membros da sua equipe?",
-        opcoes: ["Sempre", "Frequentemente", "Raramente", "Nunca"],
-        textoLabel:
-          "Cite um formato de reconhecimento que você usa (mín. 3 caracteres).",
-      },
-      {
-        tipo: "radioTexto",
-        descricao:
-          "Como você avalia sua habilidade em delegar tarefas de forma eficiente?",
-        opcoes: ["Excelente", "Boa", "Regular", "Precisa melhorar"],
-        textoLabel: "Dê um exemplo de delegação (mín. 3 caracteres).",
-      },
-    ],
-  },
-  {
-    nome: "Cultura e Inspiração de Liderança",
-    perguntas: [
-      {
-        tipo: "radioTexto",
-        descricao:
-          "O quanto você acredita que os valores da empresa orientam suas decisões como líder?",
-        opcoes: ["Totalmente", "Parcialmente", "Pouco", "Nada"],
-        textoLabel:
-          "Como você conecta decisões aos valores? (mín. 3 caracteres).",
+          "Quais pontos você considera mais positivos no treinamento AVD?",
       },
       {
         tipo: "texto",
         descricao:
-          "Quais atitudes ou comportamentos você considera essenciais para ser um(a) líder inspirador(a) e eficaz?",
+          "Que melhorias você sugeriria para as próximas edições do treinamento?",
       },
     ],
   },
@@ -154,20 +110,28 @@ const blocos: Bloco[] = [
 const initResposta = (): Resposta => ({
   opcao: null,
   texto: "",
+  estrelas: null,
 });
 
 const isPerguntaValida = (p: Pergunta, r: Resposta) => {
   switch (p.tipo) {
     case "radioTexto":
-      return r.opcao !== null && r.texto.trim().length >= 3;
+      // Se houver textoLabel definido, exige opção + comentário ≥ 3
+      if (p.textoLabel && p.textoLabel.trim().length > 0) {
+        return r.opcao !== null && r.texto.trim().length >= 3;
+      }
+      // Senão, só exige uma opção marcada
+      return r.opcao !== null;
     case "texto":
       return r.texto.trim().length >= 3;
+    case "estrelas":
+      return r.estrelas !== null && r.estrelas >= 1;
     default:
       return false;
   }
 };
 
-export default function FormularioPrimeiraLiderancaT01() {
+export default function FormularioTreinamentoAVD() {
   const [step, setStep] = useState(0);
   const [respostas, setRespostas] = useState<Resposta[][]>(
     blocos.map((b) => b.perguntas.map(() => initResposta()))
@@ -187,8 +151,8 @@ export default function FormularioPrimeiraLiderancaT01() {
 
   const blocoValido = validasNoBloco === perguntasAtuais.length;
 
-  /** ===== Progresso ===== */
-  const porBloco = 100 / blocos.length; // 25
+  /** ===== Progresso (≈33% por bloco) ===== */
+  const porBloco = 100 / blocos.length; // 3 blocos → ~33.33
   const progressoAlvo = useMemo(() => {
     const blocosAnteriores = step * porBloco;
     const blocoAtual = blocoValido ? porBloco : 0;
@@ -196,7 +160,6 @@ export default function FormularioPrimeiraLiderancaT01() {
   }, [step, porBloco, blocoValido]);
 
   const [progress, setProgress] = useState<number>(0);
-
   useEffect(() => {
     const start = progress;
     const end = progressoAlvo;
@@ -245,8 +208,12 @@ export default function FormularioPrimeiraLiderancaT01() {
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const v = e.target.value;
-    if (v.length > 500) return;
+    if (v.length > 500) return; // padronizado com 500
     setResposta(perguntaIndex, { texto: v });
+  };
+
+  const onChangeEstrelas = (perguntaIndex: number, valor: number) => {
+    setResposta(perguntaIndex, { estrelas: valor });
   };
 
   const router = useRouter();
@@ -256,13 +223,13 @@ export default function FormularioPrimeiraLiderancaT01() {
     if (step < blocos.length - 1) {
       setStep((s) => s + 1);
     } else {
-      router.push("/pesquisas/primeira-lideranca-t01/encerramento");
+      router.push("/pesquisas-colaborador/treinamento-avd/encerramento");
     }
   };
 
   const handleVoltar = () => {
     if (step === 0) {
-      router.push("/pesquisas/primeira-lideranca-t01");
+      router.push("/pesquisas-colaborador/treinamento-avd");
     } else {
       setStep((s) => s - 1);
     }
@@ -273,17 +240,12 @@ export default function FormularioPrimeiraLiderancaT01() {
     <PageMain>
       {/* Cabeçalho */}
       <div className="mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-2xl font-semibold">Primeira Liderança - T01</h2>
-          <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-            <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-              Treinamento
-            </span>
-            <span className="text-black font-semibold text-sm">
-              Até: 07/12/2025
-            </span>
-          </div>
-        </div>
+        <SurveyHeader
+                                  title="Treinamento AVD"
+                                  category="Treinamento"
+                                  categoryVariant="clima"
+                                  deadline="30/03/2026"
+                                />
 
         {/* Progresso + Voltar */}
         <div className="mt-10">
@@ -314,15 +276,25 @@ export default function FormularioPrimeiraLiderancaT01() {
 
       {/* ===== Bloco atual ===== */}
       <section className="bg-white mt-10">
-        <h3 className="text-xl font-semibold text-black mb-2">
+        <h3 className="text-xl font-semibold text-black mb-10">
           {blocos[step].nome}
         </h3>
 
         {perguntasAtuais.map((p, i) => {
           const r = respostasAtuais[i];
-          const textoLen = r.texto.length;
-          const validaPerg = isPerguntaValida(p, r);
           const isLast = i === perguntasAtuais.length - 1;
+
+          const textoLen = r.texto.length;
+          const textoTrimLen = r.texto.trim().length;
+          const textoValido = textoTrimLen >= 3;
+
+          // Validação visual para o aviso, seguindo o segundo formulário:
+          const avisoSomeRadioTexto =
+            p.tipo === "radioTexto" && p.textoLabel
+              ? r.opcao !== null && textoValido
+              : true; // quando não exige texto, não mostra aviso
+
+          const avisoSomeTexto = p.tipo === "texto" ? textoValido : true;
 
           return (
             <div key={i}>
@@ -362,48 +334,83 @@ export default function FormularioPrimeiraLiderancaT01() {
                     ))}
                   </div>
 
-                  {/* linha interna (entre alternativas e campo aberto) */}
-                  <div className="my-10 border-t border-dashed border-gray-500" />
+                  {/* Campo aberto apenas quando houver textoLabel */}
+                  {p.textoLabel && (
+                    <>
+                      <div className="my-5 border-t border-dashed border-gray-500" />
 
-                  <p className="text-black text-sm leading-relaxed mb-3">
-                    {p.textoLabel ??
-                      "Escreva um comentário complementar (mín. 3 caracteres)."}
-                  </p>
+                      <p className="text-black text-sm leading-relaxed mb-3">
+                        {p.textoLabel}
+                      </p>
 
-                  <textarea
-                    id={`observacoes_${step}_${i}`}
-                    name={`observacoes_${step}_${i}`}
-                    rows={4}
-                    value={r.texto}
-                    onChange={(e) => onChangeTexto(i, e)}
-                    maxLength={500}
-                    className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
-                    placeholder="Digite seu texto"
-                  />
+                      <textarea
+                        id={`observacoes_${step}_${i}`}
+                        name={`observacoes_${step}_${i}`}
+                        rows={4}
+                        value={r.texto}
+                        onChange={(e) => onChangeTexto(i, e)}
+                        maxLength={500}
+                        className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
+                        placeholder="Digite seu texto"
+                      />
 
-                  <div className="mt-1 flex items-center justify-between text-xs">
-                    <span
-                      className={
-                        validaPerg
-                          ? "opacity-0 select-none"
-                          : "text-gray-500 transition-opacity"
-                      }
-                    >
-                      Escreva pelo menos 3 caracteres.
-                    </span>
-                    <span
-                      className={
-                        textoLen >= 500 ? "text-red-500" : "text-gray-500"
-                      }
-                    >
-                      {textoLen} / 500
-                    </span>
-                  </div>
+                      <div className="mt-1 flex items-center justify-between text-xs">
+                        <span
+                          className={
+                            avisoSomeRadioTexto
+                              ? "opacity-0 select-none"
+                              : "text-gray-600 transition-opacity"
+                          }
+                        >
+                          Selecione uma opção e escreva pelo menos 3 caracteres.
+                        </span>
+                        <span
+                          className={
+                            textoLen >= 500 ? "text-red-500" : "text-gray-600"
+                          }
+                        >
+                          {textoLen} / 500
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </>
+              )}
+
+              {p.tipo === "estrelas" && (
+                <div className="flex items-center gap-3">
+                  {Array.from(
+                    { length: p.maxEstrelas ?? 5 },
+                    (_, idx) => idx + 1
+                  ).map((n) => {
+                    const active = (r.estrelas ?? 0) >= n;
+                    return (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => onChangeEstrelas(i, n)}
+                        className={`h-8 w-8 flex items-center justify-center rounded transition-colors ${
+                          active ? "" : "hover:bg-gray-100"
+                        }`}
+                        aria-label={`${n} estrela(s)`}
+                      >
+                        <Star
+                          className={`w-6 h-6 ${
+                            active
+                              ? "fill-[#238662] stroke-[#238662]"
+                              : "fill-white stroke-black"
+                          }`}
+                          strokeWidth={2}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
               )}
 
               {p.tipo === "texto" && (
                 <>
+                  {/* Mantemos o mesmo padrão visual do segundo formulário */}
                   <textarea
                     id={`texto_${step}_${i}`}
                     name={`texto_${step}_${i}`}
@@ -412,21 +419,22 @@ export default function FormularioPrimeiraLiderancaT01() {
                     onChange={(e) => onChangeTexto(i, e)}
                     maxLength={500}
                     className="w-full rounded-sm border border-gray-500 p-3 text-sm text-black outline-none focus:ring-2 focus:ring-[#21C25E]"
-                    placeholder="Digite sua resposta (mín. 3 e máx. 500 caracteres)"
+                    placeholder="Digite sua resposta (mín. 3 caracteres)"
                   />
+
                   <div className="mt-1 flex items-center justify-between text-xs">
                     <span
                       className={
-                        validaPerg
+                        avisoSomeTexto
                           ? "opacity-0 select-none"
-                          : "text-gray-500 transition-opacity"
+                          : "text-gray-600 transition-opacity"
                       }
                     >
                       Escreva pelo menos 3 caracteres.
                     </span>
                     <span
                       className={
-                        textoLen >= 500 ? "text-red-500" : "text-gray-500"
+                        textoLen >= 500 ? "text-red-500" : "text-gray-600"
                       }
                     >
                       {textoLen} / 500

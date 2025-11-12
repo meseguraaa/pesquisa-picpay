@@ -1,6 +1,7 @@
 "use client";
 
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 import { Button } from "@/components/ui/button";
 import { FileInput } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -11,17 +12,12 @@ export default function EncerramentoPesquisa() {
   return (
     <PageMain>
           {/* Cabeçalho */}
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-2xl font-semibold">Pesquisa de Clima - 2025</h2>
-            <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-              <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Clima Organizacional
-              </span>
-              <span className="text-black font-semibold text-sm">
-                Até: 01/12/2026
-              </span>
-            </div>
-          </div>
+          <SurveyHeader
+                  title="Pesquisa de Clima - 2025"
+                  category="Clima Organizacional"
+                  categoryVariant="clima"
+                  deadline="01/12/2026"
+                />
 
           {/* Texto */}
           <div className="space-y-4 text-black text-base leading-relaxed">

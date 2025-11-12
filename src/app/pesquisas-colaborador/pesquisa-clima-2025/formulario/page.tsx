@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 /** ===== Tipos ===== */
 type TipoPergunta = "radioTexto" | "estrelas" | "nps";
@@ -222,13 +223,13 @@ export default function FormularioPesquisaClima2025() {
       setStep((s) => s + 1);
     } else {
       // Último bloco → encerra
-      router.push("/pesquisas/pesquisa-clima-2025/encerramento");
+      router.push("/pesquisas-colaborador/pesquisa-clima-2025/encerramento");
     }
   };
 
   const handleVoltar = () => {
     if (step === 0) {
-      router.push("/pesquisas/pesquisa-clima-2025");
+      router.push("/pesquisas-colaborador/pesquisa-clima-2025");
     } else {
       setStep((s) => s - 1);
     }
@@ -239,19 +240,12 @@ export default function FormularioPesquisaClima2025() {
     <PageMain>
           {/* Cabeçalho */}
           <div className="mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold">
-                Pesquisa de Clima - 2025
-              </h2>
-              <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-                <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                  Clima Organizacional
-                </span>
-                <span className="text-black font-semibold text-sm">
-                  Até: 01/12/2026
-                </span>
-              </div>
-            </div>
+            <SurveyHeader
+                    title="Pesquisa de Clima - 2025"
+                    category="Clima Organizacional"
+                    categoryVariant="clima"
+                    deadline="01/12/2026"
+                  />
 
             {/* Progresso (animado) */}
             <div className="mt-10">
@@ -283,7 +277,7 @@ export default function FormularioPesquisaClima2025() {
 
           {/* ===== Bloco atual ===== */}
           <section className="bg-white mt-10">
-            <h3 className="text-xl font-semibold text-black mb-2">
+            <h3 className="text-xl font-semibold text-black mb-10">
               {blocos[step].nome}
             </h3>
 

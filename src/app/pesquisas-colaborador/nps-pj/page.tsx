@@ -3,22 +3,18 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { PageMain } from "@/components/layout/page";
+import SurveyHeader from "@/components/survey-header/page";
 
 export default function npsPJ() {
   return (
     <PageMain>
       {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
-      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-2xl font-semibold">NPS - PJ</h2>
-        <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-          <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-            Serviços
-          </span>
-          <span className="text-black font-semibold text-sm">
-            Até: 13/01/2026
-          </span>
-        </div>
-      </div>
+      <SurveyHeader
+              title="NPS - PJ"
+              category="Serviços"
+              categoryVariant="clima"
+              deadline="13/01/2026"
+            />
 
       {/* Imagem */}
       <Image
@@ -67,7 +63,7 @@ export default function npsPJ() {
           asChild
           className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2"
         >
-          <Link href="/pesquisas/nps-pj/formulario">
+          <Link href="/pesquisas-colaborador/nps-pj/formulario">
             Iniciar <ArrowRight className="w-5 h-5" />
           </Link>
         </Button>
