@@ -9,13 +9,11 @@ import {
   ArrowRight,
   ArrowLeft,
 } from "lucide-react";
+import { PageMain } from "@/components/layout/page";
 
 export default function PesquisaClima2025() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* MAIN */}
-      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto bg-white">
+    <PageMain>
           {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-2xl font-semibold">Pesquisa de Clima - 2025</h2>
@@ -87,8 +85,6 @@ export default function PesquisaClima2025() {
               </Link>
             </Button>
           </div>
-        </div>
-      </main>
-    </div>
+    </PageMain>
   );
 }

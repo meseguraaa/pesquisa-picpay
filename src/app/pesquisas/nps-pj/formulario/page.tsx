@@ -16,6 +16,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { PageMain } from "@/components/layout/page";
 
 /** ===== Tipos ===== */
 type TipoPergunta = "nps";
@@ -145,124 +146,117 @@ export default function FormularioPesquisaClima2025() {
 
   /** ===== Render ===== */
   return (
-    <div className="min-h-screen bg-white">
-      {/* MAIN */}
-      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto bg-white">
-          {/* Cabeçalho */}
-          <div className="mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold">NPS - PJ</h2>
-              <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-                <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                  Serviços
-                </span>
-                <span className="text-black font-semibold text-sm">
-                  Até: 13/01/2026
-                </span>
-              </div>
-            </div>
-
-            {/* Progresso (0 → 100 quando seleciona NPS) */}
-            <div className="mt-10">
-              {/* Botão Voltar */}
-              <div className="flex items-center mb-4">
-                <button
-                  onClick={handleVoltar}
-                  className="flex items-center gap-2 text-[#333333] hover:text-[#238662] transition-colors cursor-pointer"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span className="text-sm font-medium">Voltar</span>
-                </button>
-              </div>
-              <div
-                className={`mb-1 font-semibold text-sm ${
-                  progress > 0 ? "text-[#238662]" : "text-gray-500"
-                }`}
-              >
-                {progress}%
-              </div>
-              <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-[#238662]"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* ===== Bloco único NPS ===== */}
-          <section className="bg-white mt-10">
-            <h3 className="text-xl font-semibold text-black mb-2">
-              {blocos[step].nome}
-            </h3>
-
-            {perguntasAtuais.map((p, i) => {
-              const r = respostasAtuais[i];
-
-              return (
-                <div key={i}>
-                  <p className="text-black text-sm leading-relaxed mb-4">
-                    {p.descricao}
-                  </p>
-
-                  {/* NPS (1..10) */}
-                  <div className="mt-2 grid grid-cols-5 sm:grid-cols-10 gap-2">
-                    {Array.from({ length: 10 }, (_, idx) => idx + 1).map(
-                      (n) => {
-                        const selected = r.nps === n;
-                        return (
-                          <button
-                            key={n}
-                            type="button"
-                            onClick={() => onChangeNps(i, n)}
-                            className={`group flex flex-col items-center justify-center gap-1 p-2 rounded-md border transition-colors ${
-                              selected
-                                ? "bg-[#238662] border-[#238662] text-white"
-                                : "bg-white border-black text-black hover:bg-gray-100"
-                            }`}
-                            aria-label={`NPS ${n}`}
-                          >
-                            <span
-                              className={`flex items-center justify-center h-6 ${
-                                selected ? "text-white" : "text-black"
-                              }`}
-                            >
-                              {faceFor(n)}
-                            </span>
-                            <span className="text-xs font-medium">{n}</span>
-                          </button>
-                        );
-                      }
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </section>
-
-          {/* ===== Ação (somente FINALIZAR) ===== */}
-          <div className="mt-6">
-            <button
-              onClick={handleFinalizar}
-              disabled={!blocoValido}
-              className={`w-full h-12 text-base rounded-[10px] transition-colors flex items-center justify-center gap-2 ${
-                blocoValido
-                  ? "bg-[#333333] text-white hover:bg-[#222222] cursor-pointer"
-                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
-              }`}
-            >
-              Finalizar
-              <Check
-                className={`w-5 h-5 ${
-                  blocoValido ? "text-white" : "text-gray-600"
-                }`}
-                strokeWidth={2}
-              />
-            </button>
+    <PageMain>
+      {/* Cabeçalho */}
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-2xl font-semibold">NPS - PJ</h2>
+          <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
+            <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
+              Serviços
+            </span>
+            <span className="text-black font-semibold text-sm">
+              Até: 13/01/2026
+            </span>
           </div>
         </div>
-      </main>
-    </div>
+
+        {/* Progresso (0 → 100 quando seleciona NPS) */}
+        <div className="mt-10">
+          {/* Botão Voltar */}
+          <div className="flex items-center mb-4">
+            <button
+              onClick={handleVoltar}
+              className="flex items-center gap-2 text-[#333333] hover:text-[#238662] transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm font-medium">Voltar</span>
+            </button>
+          </div>
+          <div
+            className={`mb-1 font-semibold text-sm ${
+              progress > 0 ? "text-[#238662]" : "text-gray-500"
+            }`}
+          >
+            {progress}%
+          </div>
+          <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#238662]"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ===== Bloco único NPS ===== */}
+      <section className="bg-white mt-10">
+        <h3 className="text-xl font-semibold text-black mb-2">
+          {blocos[step].nome}
+        </h3>
+
+        {perguntasAtuais.map((p, i) => {
+          const r = respostasAtuais[i];
+
+          return (
+            <div key={i}>
+              <p className="text-black text-sm leading-relaxed mb-4">
+                {p.descricao}
+              </p>
+
+              {/* NPS (1..10) */}
+              <div className="mt-2 grid grid-cols-5 sm:grid-cols-10 gap-2">
+                {Array.from({ length: 10 }, (_, idx) => idx + 1).map((n) => {
+                  const selected = r.nps === n;
+                  return (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => onChangeNps(i, n)}
+                      className={`group flex flex-col items-center justify-center gap-1 p-2 rounded-md border transition-colors ${
+                        selected
+                          ? "bg-[#238662] border-[#238662] text-white"
+                          : "bg-white border-black text-black hover:bg-gray-100"
+                      }`}
+                      aria-label={`NPS ${n}`}
+                    >
+                      <span
+                        className={`flex items-center justify-center h-6 ${
+                          selected ? "text-white" : "text-black"
+                        }`}
+                      >
+                        {faceFor(n)}
+                      </span>
+                      <span className="text-xs font-medium">{n}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* ===== Ação (somente FINALIZAR) ===== */}
+      <div className="mt-6">
+        <button
+          onClick={handleFinalizar}
+          disabled={!blocoValido}
+          className={`w-full h-12 text-base rounded-[10px] transition-colors flex items-center justify-center gap-2 ${
+            blocoValido
+              ? "bg-[#333333] text-white hover:bg-[#222222] cursor-pointer"
+              : "bg-gray-300 text-gray-600 cursor-not-allowed"
+          }`}
+        >
+          Finalizar
+          <Check
+            className={`w-5 h-5 ${
+              blocoValido ? "text-white" : "text-gray-600"
+            }`}
+            strokeWidth={2}
+          />
+        </button>
+      </div>
+    </PageMain>
   );
 }

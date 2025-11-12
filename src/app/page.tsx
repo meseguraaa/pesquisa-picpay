@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SendHorizontal } from "lucide-react";
+import { PageMain } from "@/components/layout/page";
 
 export default function Home() {
   const cards = [
@@ -88,7 +89,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-10">
+
+      
+      <PageMain>
       {/* Disponíveis */}
       <section>
         <h2 className="text-2xl font-semibold mb-4">Disponíveis</h2>
@@ -98,8 +101,8 @@ export default function Home() {
             const enabled = href.length > 0;
             return (
               <Card
-                key={card.id}
-                className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+              key={card.id}
+              className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
               >
                 <CardContent className="p-3 rounded-[15px] overflow-hidden">
                   <Image
@@ -108,7 +111,7 @@ export default function Home() {
                     width={800}
                     height={450}
                     className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
-                  />
+                    />
                   <div className="w-full space-y-2">
                     <h3 className="text-xl font-normal text-black truncate">
                       {card.title}
@@ -126,8 +129,8 @@ export default function Home() {
                     </p>
                     {enabled ? (
                       <Button
-                        asChild
-                        className="pointer-events-auto w-full mt-2 h-12 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center justify-center gap-2"
+                      asChild
+                      className="pointer-events-auto w-full mt-2 h-12 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center justify-center gap-2"
                       >
                         <Link href={href} prefetch>
                           Responder
@@ -136,8 +139,8 @@ export default function Home() {
                       </Button>
                     ) : (
                       <Button
-                        disabled
-                        className="w-full mt-2 h-12 text-lg rounded-[10px] bg-gray-300 text-gray-600 cursor-not-allowed flex items-center justify-center gap-2"
+                      disabled
+                      className="w-full mt-2 h-12 text-lg rounded-[10px] bg-gray-300 text-gray-600 cursor-not-allowed flex items-center justify-center gap-2"
                       >
                         Responder
                         <SendHorizontal className="w-6 h-6" />
@@ -157,8 +160,8 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {respondidas.map((card, index) => (
             <Card
-              key={index}
-              className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+            key={index}
+            className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
             >
               <CardContent className="p-3 rounded-[15px] overflow-hidden">
                 <Image
@@ -167,7 +170,7 @@ export default function Home() {
                   width={800}
                   height={450}
                   className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
-                />
+                  />
                 <div className="w-full space-y-2">
                   <h3 className="text-xl font-medium text-black leading-snug">
                     {card.title}
@@ -190,8 +193,8 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {encerradas.map((card, index) => (
             <Card
-              key={index}
-              className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
+            key={index}
+            className="p-0 overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow rounded-[15px] bg-[#F0F0F0]"
             >
               <CardContent className="p-3 rounded-[15px] overflow-hidden">
                 <Image
@@ -200,7 +203,7 @@ export default function Home() {
                   width={800}
                   height={450}
                   className="w-full h-48 sm:h-56 object-cover rounded-[12px] mb-3"
-                />
+                  />
                 <div className="w-full space-y-2">
                   <h3 className="text-xl font-medium text-black leading-snug">
                     {card.title}
@@ -212,6 +215,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-    </div>
+  </PageMain>
   );
 }

@@ -1,19 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { PageMain } from "@/components/layout/page";
 import { Button } from "@/components/ui/button";
-import { House, FolderGit, FileUp, FileSliders, FileInput } from "lucide-react";
+import { FileInput } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function EncerramentoPesquisa() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* MAIN */}
-      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto bg-white">
+    <PageMain>
           {/* Cabeçalho */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-2xl font-semibold">Pesquisa de Clima - 2025</h2>
@@ -70,8 +66,6 @@ export default function EncerramentoPesquisa() {
               <FileInput className="w-5 h-5" />
             </Button>
           </div>
-        </div>
-      </main>
-    </div>
+    </PageMain>
   );
 }

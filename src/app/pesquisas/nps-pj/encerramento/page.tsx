@@ -5,63 +5,57 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { House, FolderGit, FileUp, FileSliders, FileInput } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { PageMain } from "@/components/layout/page";
 
 export default function EncerramentoPesquisa() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* MAIN */}
-      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto bg-white">
-          {/* Cabeçalho */}
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-2xl font-semibold">NPS - PJ</h2>
-            <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
-              <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
-                Serviços
-              </span>
-              <span className="text-black font-semibold text-sm">
-                Até: 13/01/2026
-              </span>
-            </div>
-          </div>
-
-          {/* Texto */}
-          <div className="space-y-4 text-black text-base leading-relaxed">
-            <p>
-              Agradecemos por dedicar seu tempo para responder à pesquisa NPS -
-              PJ.
-            </p>
-
-            <p>
-              Sua opinião é essencial para aprimorarmos continuamente a
-              qualidade dos nossos serviços e o relacionamento com nossos
-              parceiros. As informações compartilhadas nos ajudarão a entender
-              melhor suas necessidades, expectativas e desafios, permitindo que
-              possamos evoluir juntos e fortalecer nossa parceria.
-            </p>
-
-            <p>
-              Nosso compromisso é oferecer experiências cada vez mais
-              consistentes, soluções eficazes e um atendimento de excelência.
-              Obrigado por fazer parte dessa jornada e por contribuir para o
-              nosso crescimento mútuo!
-            </p>
-          </div>
-
-          {/* Botão Home */}
-          <div className="mt-8 flex justify-center gap-4">
-            <Button
-              onClick={() => router.push("/")}
-              className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2 cursor-pointer"
-            >
-              Home
-              <FileInput className="w-5 h-5" />
-            </Button>
-          </div>
+    <PageMain>
+      {/* Cabeçalho */}
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-2xl font-semibold">NPS - PJ</h2>
+        <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
+          <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
+            Serviços
+          </span>
+          <span className="text-black font-semibold text-sm">
+            Até: 13/01/2026
+          </span>
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Texto */}
+      <div className="space-y-4 text-black text-base leading-relaxed">
+        <p>
+          Agradecemos por dedicar seu tempo para responder à pesquisa NPS - PJ.
+        </p>
+
+        <p>
+          Sua opinião é essencial para aprimorarmos continuamente a qualidade
+          dos nossos serviços e o relacionamento com nossos parceiros. As
+          informações compartilhadas nos ajudarão a entender melhor suas
+          necessidades, expectativas e desafios, permitindo que possamos evoluir
+          juntos e fortalecer nossa parceria.
+        </p>
+
+        <p>
+          Nosso compromisso é oferecer experiências cada vez mais consistentes,
+          soluções eficazes e um atendimento de excelência. Obrigado por fazer
+          parte dessa jornada e por contribuir para o nosso crescimento mútuo!
+        </p>
+      </div>
+
+      {/* Botão Home */}
+      <div className="mt-8 flex justify-center gap-4">
+        <Button
+          onClick={() => router.push("/")}
+          className="px-8 py-6 text-lg rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] transition-colors flex items-center gap-2 cursor-pointer"
+        >
+          Home
+          <FileInput className="w-5 h-5" />
+        </Button>
+      </div>
+    </PageMain>
   );
 }

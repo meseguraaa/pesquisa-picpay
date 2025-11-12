@@ -18,6 +18,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { PageMain } from "@/components/layout/page";
 
 /** ===== Tipos ===== */
 type TipoPergunta = "radioTexto" | "estrelas" | "nps";
@@ -235,10 +236,7 @@ export default function FormularioPesquisaClima2025() {
 
   /** ===== Render ===== */
   return (
-    <div className="min-h-screen bg-white">
-      {/* MAIN */}
-      <main className=" pb-20 md:pb-10 md:ml-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto bg-white">
+    <PageMain>
           {/* Cabeçalho */}
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -495,8 +493,6 @@ export default function FormularioPesquisaClima2025() {
               )}
             </button>
           </div>
-        </div>
-      </main>
-    </div>
+    </PageMain>
   );
 }
