@@ -270,7 +270,6 @@ export default function FormularioPrimeiraLiderancaT01() {
   /** ===== Render ===== */
   return (
     <div className="min-h-screen bg-white">
-
       {/* SIDEBAR */}
       <nav
         aria-label="Menu lateral"
@@ -313,7 +312,7 @@ export default function FormularioPrimeiraLiderancaT01() {
           {/* Cabeçalho */}
           <div className="mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-3xl font-semibold">
+              <h2 className="text-2xl font-semibold">
                 Primeira Liderança - T01
               </h2>
               <div className="mt-2 sm:mt-0 flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">

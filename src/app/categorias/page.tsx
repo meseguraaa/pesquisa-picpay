@@ -1,0 +1,174 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+type Categoria = {
+  id: string;
+  nome: string;
+  criadoPor: string;
+  data: string;
+  utilizada: boolean;
+  quantidade: number;
+};
+
+const CATEGORIAS_MOCK: Categoria[] = [
+  {
+    id: "1",
+    nome: "Clima Organizacional",
+    criadoPor: "Bruno Hernandes Leal",
+    data: "00/00/0000",
+    utilizada: true,
+    quantidade: 1,
+  },
+  {
+    id: "2",
+    nome: "Serviço",
+    criadoPor: "Nataly Barreto",
+    data: "00/00/0000",
+    utilizada: true,
+    quantidade: 1,
+  },
+  {
+    id: "3",
+    nome: "Treinamento",
+    criadoPor: "Leonardo Zimmermann",
+    data: "00/00/0000",
+    utilizada: true,
+    quantidade: 2,
+  },
+];
+
+export default function CategoriasPage() {
+  const [categorias, setCategorias] = useState<Categoria[]>(CATEGORIAS_MOCK);
+  const total = useMemo(() => categorias.length, [categorias]);
+
+  const handleAdicionar = () => console.log("Adicionar categoria");
+  const handleEditar = (id: string) => console.log("Editar categoria:", id);
+  const handleExcluir = (id: string) =>
+    setCategorias((prev) => prev.filter((c) => c.id !== id));
+
+  return (
+    <div className="w-full flex justify-center px-4 sm:px-6 lg:px-8 py-6">
+      <div className="w-full max-w-6xl">
+        {/* ====== CARD PRINCIPAL ====== */}
+        <Card className="bg-white shadow-none border-none">
+          {/* ====== HEADER ====== */}
+          <CardHeader className="p-0 mb-2">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
+              Categorias
+            </h1>
+
+            <div className="flex items-center justify-between text-left">
+              <p className="text-black">
+                Crie as categorias que serão associadas às pesquisas.
+              </p>
+              <Button
+                onClick={handleAdicionar}
+                className="gap-2 whitespace-nowrap"
+              >
+                Adicionar <Plus size={16} />
+              </Button>
+            </div>
+          </CardHeader>
+
+          {/* ====== TABELA ====== */}
+          <CardContent className="p-0">
+            <div className="w-full overflow-x-auto rounded-[12px]">
+              <Table>
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent border-none">
+                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium">
+                      Nome
+                    </TableHead>
+                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium">
+                      Criado por
+                    </TableHead>
+                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium">
+                      Data
+                    </TableHead>
+                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium">
+                      Utilizada
+                    </TableHead>
+                    <TableHead className="w-[10%] min-w-[100px] text-center text-black font-medium">
+                      Quantidade
+                    </TableHead>
+                    <TableHead className="w-[6%] min-w-[90px]" />
+                  </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                  {categorias.map((cat) => (
+                    <TableRow
+                      key={cat.id}
+                      className="border-none hover:bg-transparent transition-none"
+                    >
+                      <TableCell className="font-normal text-left text-black">
+                        {cat.nome}
+                      </TableCell>
+                      <TableCell className="text-left text-black">
+                        {cat.criadoPor}
+                      </TableCell>
+                      <TableCell className="text-center text-black">
+                        {cat.data}
+                      </TableCell>
+                      <TableCell className="text-center text-black">
+                        {cat.utilizada ? "Sim" : "Não"}
+                      </TableCell>
+                      <TableCell className="text-center text-black">
+                        {cat.quantidade}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleEditar(cat.id)}
+                            title="Editar"
+                          >
+                            <Pencil size={16} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleExcluir(cat.id)}
+                            title="Excluir"
+                          >
+                            <Trash2 size={16} />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+
+                  {total === 0 && (
+                    <TableRow className="border-none">
+                      <TableCell
+                        colSpan={6}
+                        className="text-center py-10 text-muted-foreground"
+                      >
+                        Nenhuma categoria cadastrada.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

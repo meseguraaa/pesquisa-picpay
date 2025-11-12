@@ -57,7 +57,7 @@ export default function Sidebar({
                 <span aria-hidden="true" className="hover-bg absolute inset-y-0 left-0 bg-gray-100" />
 
                 {/* Ícone preto sempre — fica fixo por causa do pl-7 constante */}
-                <Icon className="relative z-10 w-6 h-6 text-black flex-shrink-0" />
+                <Icon className="relative z-10 w-6 h-6 text-black shrink-0" />
 
                 {/* Texto preto — não ocupa espaço quando fechado; aparece quando a sidebar abre */}
                 <span

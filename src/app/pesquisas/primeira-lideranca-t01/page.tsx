@@ -13,7 +13,6 @@ import {
 export default function PesquisaClima2025() {
   return (
     <div className="min-h-screen bg-white">
-
       {/* SIDEBAR */}
       <nav
         aria-label="Menu lateral"
@@ -76,7 +75,7 @@ export default function PesquisaClima2025() {
         <div className="max-w-5xl mx-auto bg-white">
           {/* CABEÇALHO — Título + Categoria + Data (responsivo) */}
           <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-3xl font-semibold">Primeira Liderança - T01</h2>
+            <h2 className="text-2xl font-semibold">Primeira Liderança - T01</h2>
             <div className="flex w-full justify-between sm:w-auto sm:justify-end sm:gap-4">
               <span className="inline-flex items-center justify-center text-white bg-[#21C25E] rounded-full px-4 h-6 text-sm font-medium">
                 Treinamento
