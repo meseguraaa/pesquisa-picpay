@@ -89,8 +89,6 @@ export default function Home() {
   ];
 
   return (
-
-      
       <PageMain>
       {/* Disponíveis */}
       <section>

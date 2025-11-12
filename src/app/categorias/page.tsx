@@ -1,5 +1,4 @@
 "use client";
-
 import { useMemo, useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -13,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
-
 type Categoria = {
   id: string;
   nome: string;
@@ -22,7 +20,6 @@ type Categoria = {
   utilizada: boolean;
   quantidade: number;
 };
-
 const CATEGORIAS_MOCK: Categoria[] = [
   {
     id: "1",
@@ -49,14 +46,11 @@ const CATEGORIAS_MOCK: Categoria[] = [
     quantidade: 2,
   },
 ];
-
 export default function CategoriasPage() {
   const [categorias] = useState<Categoria[]>(CATEGORIAS_MOCK);
   const total = useMemo(() => categorias.length, [categorias]);
-
   const handleAdicionar = () => console.log("Adicionar categoria");
   const handleEditar = (id: string) => console.log("Editar categoria:", id);
-
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
@@ -65,7 +59,6 @@ export default function CategoriasPage() {
             <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
               Categorias
             </h1>
-
             <div className="flex items-center justify-between text-left">
               <p className="text-black">
                 Crie as categorias que serão associadas às pesquisas.
@@ -78,50 +71,48 @@ export default function CategoriasPage() {
               </Button>
             </div>
           </CardHeader>
-
           <CardContent className="p-0">
             <div className="w-full overflow-x-auto rounded-[12px]">
-              <Table className="w-full border-collapse">
+              <Table className="w-full border-collapse text-base">
                 <TableHeader>
-                  <TableRow className="hover:bg-transparent border-none">
-                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium pl-0">
+                  <TableRow className="hover:bg-transparent border-b-2 border-[#D9D9D9]">
+                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium pl-0 text-base">
                       Nome
                     </TableHead>
-                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium">
+                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium text-base">
                       Criado por
                     </TableHead>
-                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium">
+                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium text-base">
                       Data
                     </TableHead>
-                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium">
+                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium text-base">
                       Utilizada
                     </TableHead>
-                    <TableHead className="w-[10%] min-w-[100px] text-center text-black font-medium">
+                    <TableHead className="w-[10%] min-w-[100px] text-center text-black font-medium text-base">
                       Quantidade
                     </TableHead>
                     <TableHead className="w-[6%] min-w-[90px]" />
                   </TableRow>
                 </TableHeader>
-
                 <TableBody>
                   {categorias.map((cat) => (
                     <TableRow
                       key={cat.id}
-                      className="border-none hover:bg-transparent transition-none"
+                      className="border-b border-[#F5F5F5] hover:bg-transparent transition-none text-base"
                     >
-                      <TableCell className="font-normal text-left text-black pl-0">
+                      <TableCell className="font-normal text-left text-black pl-0 text-base">
                         {cat.nome}
                       </TableCell>
-                      <TableCell className="text-left text-black">
+                      <TableCell className="text-left text-black text-base">
                         {cat.criadoPor}
                       </TableCell>
-                      <TableCell className="text-center text-black">
+                      <TableCell className="text-center text-black text-base">
                         {cat.data}
                       </TableCell>
-                      <TableCell className="text-center text-black">
+                      <TableCell className="text-center text-black text-base">
                         {cat.utilizada ? "Sim" : "Não"}
                       </TableCell>
-                      <TableCell className="text-center text-black">
+                      <TableCell className="text-center text-black text-base">
                         {cat.quantidade}
                       </TableCell>
                       <TableCell className="text-right">
@@ -147,17 +138,6 @@ export default function CategoriasPage() {
                       </TableCell>
                     </TableRow>
                   ))}
-
-                  {total === 0 && (
-                    <TableRow className="border-none">
-                      <TableCell
-                        colSpan={6}
-                        className="text-center py-10 text-muted-foreground"
-                      >
-                        Nenhuma categoria cadastrada.
-                      </TableCell>
-                    </TableRow>
-                  )}
                 </TableBody>
               </Table>
             </div>
