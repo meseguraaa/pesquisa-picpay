@@ -26,6 +26,12 @@ export default function PesquisasAdminConfig02Page() {
   const descricaoCompletaValida = descricaoCompleta.trim().length >= 3;
   const mensagemEncerramentoValida = mensagemEncerramento.trim().length >= 3;
 
+  // classe padrão para inputs/selects/textarea com foco verde
+  const focusGreen =
+    "bg-white border-black " +
+    "focus:border-[#21C25E] focus:ring-2 focus:ring-[#21C25E] focus:outline-none " +
+    "focus-visible:border-[#21C25E] focus-visible:ring-2 focus-visible:ring-[#21C25E] focus-visible:outline-none";
+
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
@@ -113,7 +119,10 @@ export default function PesquisasAdminConfig02Page() {
             <div className="space-y-1.5">
               <Label htmlFor="criador">Criador</Label>
               <Select defaultValue="bruno">
-                <SelectTrigger id="criador" className="w-full border-black">
+                <SelectTrigger
+                  id="criador"
+                  className={`w-full border-black ${focusGreen}`}
+                >
                   <SelectValue placeholder="Selecione o criador" />
                 </SelectTrigger>
                 <SelectContent>
@@ -131,7 +140,7 @@ export default function PesquisasAdminConfig02Page() {
               <Input
                 id="nome"
                 placeholder="Digite o nome da pesquisa"
-                className="bg-white border-black"
+                className={focusGreen}
               />
             </div>
 
@@ -144,7 +153,7 @@ export default function PesquisasAdminConfig02Page() {
                 <Input
                   id="imagem"
                   placeholder="Envie sua imagem de capa"
-                  className="bg-white flex-1 border-black"
+                  className={`flex-1 ${focusGreen}`}
                   readOnly
                 />
                 <Button type="button" className="gap-2 whitespace-nowrap">
@@ -163,11 +172,7 @@ export default function PesquisasAdminConfig02Page() {
                   Data de início<span className="text-red-500 ml-0.5">*</span>
                 </Label>
                 <div className="relative">
-                  <Input
-                    id="dataInicio"
-                    type="date"
-                    className="bg-white border-black"
-                  />
+                  <Input id="dataInicio" type="date" className={focusGreen} />
                 </div>
               </div>
 
@@ -175,11 +180,7 @@ export default function PesquisasAdminConfig02Page() {
                 {/* SEM asterisco, não obrigatória */}
                 <Label htmlFor="dataFim">Data de fim</Label>
                 <div className="relative">
-                  <Input
-                    id="dataFim"
-                    type="date"
-                    className="bg-white border-black"
-                  />
+                  <Input id="dataFim" type="date" className={focusGreen} />
                 </div>
               </div>
             </div>
@@ -190,7 +191,10 @@ export default function PesquisasAdminConfig02Page() {
                 Categoria<span className="text-red-500 ml-0.5">*</span>
               </Label>
               <Select>
-                <SelectTrigger id="categoria" className="w-full border-black">
+                <SelectTrigger
+                  id="categoria"
+                  className={`w-full border-black ${focusGreen}`}
+                >
                   <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>
                 <SelectContent>
@@ -210,7 +214,7 @@ export default function PesquisasAdminConfig02Page() {
                 value={descricaoBreve}
                 onChange={(e) => setDescricaoBreve(e.target.value)}
                 placeholder="Digite a descrição breve da pesquisa"
-                className="min-h-24 resize-none bg-white border-black"
+                className={`min-h-24 resize-none ${focusGreen}`}
               />
               <div className="mt-1 flex items-center justify-between text-[11px]">
                 <span
@@ -243,7 +247,7 @@ export default function PesquisasAdminConfig02Page() {
                 value={descricaoCompleta}
                 onChange={(e) => setDescricaoCompleta(e.target.value)}
                 placeholder="Digite a descrição completa da pesquisa"
-                className="min-h-[140px] resize-none bg-white border-black"
+                className={`min-h-[140px] resize-none ${focusGreen}`}
               />
               <div className="mt-1 flex items-center justify-between text-[11px]">
                 <span
@@ -278,7 +282,7 @@ export default function PesquisasAdminConfig02Page() {
                 value={mensagemEncerramento}
                 onChange={(e) => setMensagemEncerramento(e.target.value)}
                 placeholder="Digite a mensagem de encerramento"
-                className="min-h-[120px] resize-none bg-white border-black"
+                className={`min-h-[120px] resize-none ${focusGreen}`}
               />
               <div className="mt-1 flex items-center justify-between text-[11px]">
                 <span
@@ -338,7 +342,7 @@ export default function PesquisasAdminConfig02Page() {
 
                 <Button
                   type="button"
-                  className=" rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] flex items-center justify-center gap-2 px-6"
+                  className="rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] flex items-center justify-center gap-2 px-6"
                 >
                   Continuar <ArrowRight className="w-5 h-5" />
                 </Button>
