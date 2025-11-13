@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, X } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 // ------ Tipos & Mock ------
 type Categoria = {
@@ -52,16 +54,23 @@ const CATEGORIAS_MOCK: Categoria[] = [
 ];
 
 // ------ Página ------
-// Renomeado conforme pedido
 export default function PesquisasAdminConfig01Page() {
   const [categorias] = useState<Categoria[]>(CATEGORIAS_MOCK);
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [novaCategoriaNome, setNovaCategoriaNome] = useState("");
+
   const handleEditar = (id: string) => console.log("Editar categoria:", id);
+
+  const handleConfirmar = () => {
+    // apenas fecha o modal
+    setIsDialogOpen(false);
+    setNovaCategoriaNome("");
+  };
 
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
-        {/* Cabeçalho + ação (layout da imagem) */}
         <Card className="bg-white shadow-none border-none">
           <CardHeader className="p-0 mb-2">
             <div className="flex items-center justify-between">
@@ -70,14 +79,51 @@ export default function PesquisasAdminConfig01Page() {
                   Categorias
                 </h1>
                 <p className="text-black text-left">
-                  Crie as categorias que serão associadas às pesquisas-colaborador.
+                  Crie as categorias que serão associadas às
+                  pesquisas-colaborador.
                 </p>
               </div>
 
-              {/* Botão simples, sem modal/validações */}
-              <Button className="gap-2 whitespace-nowrap">
-                Adicionar <Plus size={16} />
-              </Button>
+              {/* Modal */}
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <Button
+                  className="gap-2 whitespace-nowrap"
+                  onClick={() => setIsDialogOpen(true)}
+                >
+                  Adicionar <Plus size={16} />
+                </Button>
+
+                <DialogContent
+                  className="max-w-xl w-full rounded-[15px] p-8"
+                  showCloseButton={false}
+                >
+                  {/* X único */}
+                  <button
+                    type="button"
+                    className="absolute right-6 top-6 inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    <X size={18} />
+                  </button>
+
+                  <h2 className="text-xl font-semibold text-black mb-6">
+                    Adicionar categoria
+                  </h2>
+
+                  <div className="w-full mb-6">
+                    <Input
+                      placeholder="Digite o nome da categoria"
+                      value={novaCategoriaNome}
+                      onChange={(e) => setNovaCategoriaNome(e.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+
+                  <div className="w-full flex justify-end">
+                    <Button onClick={handleConfirmar}>Confirmar</Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </CardHeader>
 
@@ -135,7 +181,6 @@ export default function PesquisasAdminConfig01Page() {
                             size="icon"
                             className="h-8 w-8"
                             onClick={() => handleEditar(cat.id)}
-                            aria-label={`Editar ${cat.nome}`}
                           >
                             <Pencil size={16} />
                           </Button>
@@ -144,7 +189,6 @@ export default function PesquisasAdminConfig01Page() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            aria-label={`Excluir ${cat.nome}`}
                           >
                             <Trash2 size={16} />
                           </Button>
