@@ -1,277 +1,351 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { useState } from "react";
 import { PageMain } from "@/components/layout/page";
 
-// ------ Tipos & Mock ------
-type PesquisaConfig02 = {
-  id: string;
-  nome: string;
-  criadoPor: string;
-  data: string; // dd/mm/aaaa
-  status: boolean; // ativa/inativa
-  quantidade: number; // qtd pessoas
-};
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 
-const PESQUISAS_CONFIG02_MOCK: PesquisaConfig02[] = [
-  { id: "1", nome: "Pesquisa de Clima - 2025", criadoPor: "Bruno Hernandes Leal", data: "10/11/2025", status: true, quantidade: 5798 },
-  { id: "2", nome: "Primeira Liderança - T01", criadoPor: "Nataly Barreto", data: "31/10/2025", status: true, quantidade: 27 },
-  { id: "3", nome: "NPS - PJ", criadoPor: "Leonardo Zimmermann", data: "22/10/2025", status: true, quantidade: 876 },
-  { id: "4", nome: "Treinamento AVD", criadoPor: "Leonardo Zimmermann", data: "09/10/2025", status: true, quantidade: 1231 },
-  { id: "5", nome: "Onboarding de Novos Colaboradores", criadoPor: "Fabio Adriano Pereira", data: "25/09/2025", status: false, quantidade: 45 },
-  { id: "6", nome: "Comunicação Interna", criadoPor: "Karine Nascimento", data: "19/08/2025", status: false, quantidade: 5433 },
-  { id: "7", nome: "Saúde e Bem-Estar", criadoPor: "Alencar Petroli", data: "19/08/2025", status: false, quantidade: 5433 },
-  { id: "8", nome: "Inovação e Melhoria Contínua", criadoPor: "Nataly Barreto", data: "02/08/2025", status: false, quantidade: 398 },
-  { id: "9", nome: "Atendimento ao Cliente", criadoPor: "Bruno Hernandes Leal", data: "17/07/2025", status: false, quantidade: 398 },
-  { id: "10", nome: "Diversidade e Inclusão", criadoPor: "Priscilla Vieira", data: "01/07/2025", status: false, quantidade: 556 },
-];
-
-// ------ Helpers ------
-const formatNumber = (n: number) => new Intl.NumberFormat("pt-BR").format(n);
-
-type StatusFiltro = "todos" | "ativos" | "inativos";
-
-// ------ Página: Config-02 ------
 export default function PesquisasAdminConfig02Page() {
-  const [itens, setItens] = useState<PesquisaConfig02[]>(PESQUISAS_CONFIG02_MOCK);
-  const [busca, setBusca] = useState("");
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("todos");
-  const [pagina, setPagina] = useState(1);
-  const porPagina = 5;
+  const [descricaoBreve, setDescricaoBreve] = useState("");
+  const [descricaoCompleta, setDescricaoCompleta] = useState("");
+  const [mensagemEncerramento, setMensagemEncerramento] = useState("");
 
-  const filtrados = useMemo(() => {
-    const term = busca.trim().toLowerCase();
-    return itens.filter((i) => {
-      const matchBusca = !term || [i.nome, i.criadoPor, i.data].some((f) => f.toLowerCase().includes(term));
-      const matchStatus =
-        statusFiltro === "todos" ? true : statusFiltro === "ativos" ? i.status === true : i.status === false;
-      return matchBusca && matchStatus;
-    });
-  }, [itens, busca, statusFiltro]);
-
-  const totalPaginas = Math.max(1, Math.ceil(filtrados.length / porPagina));
-  const paginaCorrigida = Math.min(pagina, totalPaginas);
-  const inicio = (paginaCorrigida - 1) * porPagina;
-  const visiveis = filtrados.slice(inicio, inicio + porPagina);
-
-  const toggleStatus = (id: string) => {
-    setItens((prev) => prev.map((i) => (i.id === id ? { ...i, status: !i.status } : i)));
-  };
-
-  const handleEditar = (id: string) => console.log("Editar item (config-02):", id);
-  const handleExcluir = (id: string) => console.log("Excluir item (config-02):", id);
+  const descricaoBreveValida = descricaoBreve.trim().length >= 3;
+  const descricaoCompletaValida = descricaoCompleta.trim().length >= 3;
+  const mensagemEncerramentoValida = mensagemEncerramento.trim().length >= 3;
 
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
-        {/* Cabeçalho + ação (mantém o layout base) */}
-        <Card className="bg-white shadow-none border-none">
-          <CardHeader className="p-0 mb-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">Configuração – Etapa 02</h1>
-                <p className="text-black text-left">Refine filtros, ative/desative pesquisas e gerencie entradas.</p>
-              </div>
+        {/* Cabeçalho */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
+              Pesquisas
+            </h1>
+          </div>
+        </div>
 
-              {/* Ação principal em Dialog simples */}
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="gap-2 whitespace-nowrap">
-                    Adicionar <Plus size={16} />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[520px]">
-                  <DialogHeader>
-                    <DialogTitle>Adicionar pesquisa</DialogTitle>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="nome" className="text-right">Nome</Label>
-                      <Input id="nome" className="col-span-3" placeholder="Ex.: Pesquisa de Clima - 2026" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="criador" className="text-right">Criado por</Label>
-                      <Input id="criador" className="col-span-3" placeholder="Responsável" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="data" className="text-right">Data</Label>
-                      <Input id="data" className="col-span-3" placeholder="dd/mm/aaaa" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label className="text-right">Status</Label>
-                      <div className="col-span-3 flex items-center gap-3">
-                        <Switch id="novo-status" defaultChecked />
-                        <span className="text-sm text-muted-foreground">Ativa</span>
-                      </div>
+        {/* Card principal */}
+        <div className="bg-white mt-6">
+          {/* Stepper */}
+          <div className="w-full">
+            {/* LINHA SUPERIOR: linha + círculos */}
+            <div className="flex items-center justify-between w-full">
+              {[
+                { step: 1, label: "Configuração" },
+                { step: 2, label: "Perguntas" },
+                { step: 3, label: "Disponibilizar" },
+              ].map((item, index, arr) => (
+                <div key={item.step} className="flex-1 flex items-center">
+                  {/* linha esquerda */}
+                  {index !== 0 && <div className="h-px bg-zinc-300 flex-1" />}
+
+                  {/* círculo */}
+                  <div className="mx-3 shrink-0">
+                    <div
+                      className={`flex h-8 w-8 items-center justify-center rounded-full border text-sm font-medium ${
+                        item.step === 1
+                          ? "border-black bg-black text-white"
+                          : "border-zinc-300 text-zinc-700"
+                      }`}
+                    >
+                      {item.step}
                     </div>
                   </div>
-                  <DialogFooter>
-                    <Button type="button">Salvar</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </CardHeader>
 
-          {/* Filtros */}
-          <CardContent className="p-0 mb-3">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex w-full sm:w-auto items-center gap-2">
-                <div className="relative w-full sm:w-[320px]">
-                  <Search size={16} className="absolute left-2 top-1/2 -translate-y-1/2" />
+                  {/* linha direita */}
+                  {index !== arr.length - 1 && (
+                    <div className="h-px bg-zinc-300 flex-1" />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* LINHA INFERIOR: textos alinhados embaixo dos círculos */}
+            <div className="flex justify-between mt-2 w-full">
+              {[
+                { step: 1, label: "Configuração" },
+                { step: 2, label: "Perguntas" },
+                { step: 3, label: "Disponibilizar" },
+              ].map((item, index, arr) => (
+                <div
+                  key={item.step}
+                  className={`flex-1 flex ${
+                    index === 0
+                      ? "justify-start"
+                      : index === arr.length - 1
+                      ? "justify-end"
+                      : "justify-center"
+                  }`}
+                >
+                  <span
+                    className={`text-xs font-medium text-zinc-800 text-center ${
+                      index === 0
+                        ? "ml-3"
+                        : index === arr.length - 1
+                        ? "mr-3"
+                        : ""
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Formulário */}
+          <div className="space-y-6 mt-8">
+            {/* Criador */}
+            <div className="space-y-1.5">
+              <Label htmlFor="criador">Criador</Label>
+              <Select defaultValue="bruno">
+                <SelectTrigger id="criador" className="w-full border-black">
+                  <SelectValue placeholder="Selecione o criador" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bruno">Bruno Hernandes Leal</SelectItem>
+                  <SelectItem value="outro">Outro usuário</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Nome */}
+            <div className="space-y-1.5">
+              <Label htmlFor="nome">
+                Nome<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <Input
+                id="nome"
+                placeholder="Digite o nome da pesquisa"
+                className="bg-white border-black"
+              />
+            </div>
+
+            {/* Imagem */}
+            <div className="space-y-1.5">
+              <Label htmlFor="imagem">
+                Imagem<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <Input
+                  id="imagem"
+                  placeholder="Envie sua imagem de capa"
+                  className="bg-white flex-1 border-black"
+                  readOnly
+                />
+                <Button type="button" className="gap-2 whitespace-nowrap">
+                  Adicionar <Plus size={16} />
+                </Button>
+              </div>
+              <p className="text-[11px] text-zinc-500">
+                Largura 1134 x 637 pixels
+              </p>
+            </div>
+
+            {/* Datas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="dataInicio">
+                  Data de início<span className="text-red-500 ml-0.5">*</span>
+                </Label>
+                <div className="relative">
                   <Input
-                    value={busca}
-                    onChange={(e) => {
-                      setPagina(1);
-                      setBusca(e.target.value);
-                    }}
-                    placeholder="Buscar por nome, criador ou data"
-                    className="pl-8"
-                    aria-label="Buscar pesquisas"
+                    id="dataInicio"
+                    type="date"
+                    className="bg-white border-black"
                   />
                 </div>
-                <Select
-                  value={statusFiltro}
-                  onValueChange={(v: StatusFiltro) => {
-                    setPagina(1);
-                    setStatusFiltro(v);
-                  }}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="todos">Todos</SelectItem>
-                    <SelectItem value="ativos">Ativos</SelectItem>
-                    <SelectItem value="inativos">Inativos</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
 
-              {/* Indicador rápido */}
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="rounded-full">{filtrados.length} resultado(s)</Badge>
+              <div className="space-y-1.5">
+                {/* SEM asterisco, não obrigatória */}
+                <Label htmlFor="dataFim">Data de fim</Label>
+                <div className="relative">
+                  <Input
+                    id="dataFim"
+                    type="date"
+                    className="bg-white border-black"
+                  />
+                </div>
               </div>
             </div>
-          </CardContent>
 
-          {/* Tabela */}
-          <CardContent className="p-0">
-            <div className="w-full overflow-x-auto rounded-[12px]">
-              <Table className="w-full border-collapse text-base">
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent border-b-2 border-[#D9D9D9]">
-                    <TableHead className="w-[30%] text-left text-black font-medium pl-0 text-base">Nome</TableHead>
-                    <TableHead className="w-[25%] text-left text-black font-medium text-base">Criado por</TableHead>
-                    <TableHead className="w-[15%] text-center text-black font-medium text-base">Data de criação</TableHead>
-                    <TableHead className="w-[15%] text-center text-black font-medium text-base">Status</TableHead>
-                    <TableHead className="w-[10%] text-center text-black font-medium text-base">Qtd. pessoas</TableHead>
-                    <TableHead className="w-[5%]" />
-                  </TableRow>
-                </TableHeader>
-
-                <TableBody>
-                  {visiveis.map((pes) => (
-                    <TableRow key={pes.id} className="border-b border-[#F5F5F5] hover:bg-transparent transition-none text-base">
-                      <TableCell className="text-left text-black pl-0">{pes.nome}</TableCell>
-                      <TableCell className="text-left text-black">{pes.criadoPor}</TableCell>
-                      <TableCell className="text-center text-black">{pes.data}</TableCell>
-                      <TableCell className="text-center">
-                        <div className="flex items-center justify-center gap-3">
-                          <Badge
-                            variant="outline"
-                            className={pes.status ? "border-[#21C25E] text-[#21C25E]" : "border-[#DC2626] text-[#DC2626]"}
-                          >
-                            {pes.status ? "Ativa" : "Inativa"}
-                          </Badge>
-                          <Switch checked={pes.status} onCheckedChange={() => toggleStatus(pes.id)} aria-label={`Alternar status de ${pes.nome}`} />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center text-black">{formatNumber(pes.quantidade)}</TableCell>
-
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => handleEditar(pes.id)}
-                            aria-label={`Editar ${pes.nome} (config-02)`}
-                          >
-                            <Pencil size={16} />
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => handleExcluir(pes.id)}
-                            aria-label={`Excluir ${pes.nome} (config-02)`}
-                          >
-                            <Trash2 size={16} />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-
-                  {visiveis.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="py-10 text-center text-muted-foreground">
-                        Nenhum resultado para sua busca.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+            {/* Categoria */}
+            <div className="space-y-1.5">
+              <Label htmlFor="categoria">
+                Categoria<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <Select>
+                <SelectTrigger id="categoria" className="w-full border-black">
+                  <SelectValue placeholder="Selecione uma categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="clima">Clima Organizacional</SelectItem>
+                  <SelectItem value="treinamento">Serviço</SelectItem>
+                  <SelectItem value="outros">Treinamento</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* Paginação simples */}
-            <div className="flex items-center justify-between py-4">
-              <span className="text-sm text-muted-foreground">
-                Exibindo <strong>{visiveis.length}</strong> de <strong>{filtrados.length}</strong>
-              </span>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPagina((p) => Math.max(1, p - 1))}
-                  disabled={paginaCorrigida === 1}
+            {/* Descrição breve */}
+            <div className="space-y-1.5">
+              <Label htmlFor="descricaoBreve">Descrição breve</Label>
+              <Textarea
+                id="descricaoBreve"
+                maxLength={120}
+                value={descricaoBreve}
+                onChange={(e) => setDescricaoBreve(e.target.value)}
+                placeholder="Digite a descrição breve da pesquisa"
+                className="min-h-24 resize-none bg-white border-black"
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    descricaoBreveValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
                 >
-                  <ChevronLeft className="mr-1 h-4 w-4" /> Anterior
-                </Button>
-                <span className="text-sm">
-                  Página <strong>{paginaCorrigida}</strong> de <strong>{totalPaginas}</strong>
+                  Escreva pelo menos 3 caracteres.
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
-                  disabled={paginaCorrigida === totalPaginas}
+                <span
+                  className={
+                    descricaoBreve.length >= 120
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
                 >
-                  Próxima <ChevronRight className="ml-1 h-4 w-4" />
+                  {descricaoBreve.length} / 120
+                </span>
+              </div>
+            </div>
+
+            {/* Descrição completa */}
+            <div className="space-y-1.5">
+              <Label htmlFor="descricaoCompleta">Descrição completa</Label>
+              <Textarea
+                id="descricaoCompleta"
+                maxLength={1000}
+                value={descricaoCompleta}
+                onChange={(e) => setDescricaoCompleta(e.target.value)}
+                placeholder="Digite a descrição completa da pesquisa"
+                className="min-h-[140px] resize-none bg-white border-black"
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    descricaoCompletaValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
+                >
+                  Escreva pelo menos 3 caracteres.
+                </span>
+                <span
+                  className={
+                    descricaoCompleta.length >= 1000
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
+                >
+                  {descricaoCompleta.length} / 1000
+                </span>
+              </div>
+            </div>
+
+            {/* Mensagem de encerramento */}
+            <div className="space-y-1.5">
+              <Label htmlFor="mensagemEncerramento">
+                Mensagem de encerramento
+              </Label>
+              <Textarea
+                id="mensagemEncerramento"
+                maxLength={1000}
+                value={mensagemEncerramento}
+                onChange={(e) => setMensagemEncerramento(e.target.value)}
+                placeholder="Digite a mensagem de encerramento"
+                className="min-h-[120px] resize-none bg-white border-black"
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    mensagemEncerramentoValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
+                >
+                  Escreva pelo menos 3 caracteres.
+                </span>
+                <span
+                  className={
+                    mensagemEncerramento.length >= 1000
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
+                >
+                  {mensagemEncerramento.length} / 1000
+                </span>
+              </div>
+            </div>
+
+            {/* Tipo de disponibilização */}
+            <div className="space-y-2">
+              <Label>Tipo de disponibilização</Label>
+              <RadioGroup
+                defaultValue="hierarquia"
+                className="flex flex-wrap gap-6"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="hierarquia" id="hierarquia" />
+                  <Label htmlFor="hierarquia" className="font-normal">
+                    Hierarquia
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="cpf" id="cpf" />
+                  <Label htmlFor="cpf" className="font-normal">
+                    CPF
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            {/* Ações */}
+            <div className="pt-4 w-full flex justify-end mb-8">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="border-black text-black bg-white hover:bg-gray-100 rounded-[10px] px-6"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Voltar
+                </Button>
+
+                <Button
+                  type="button"
+                  className=" rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] flex items-center justify-center gap-2 px-6"
+                >
+                  Continuar <ArrowRight className="w-5 h-5" />
                 </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </PageMain>
   );

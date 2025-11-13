@@ -1,20 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  House,
-  FolderGit,
-  FileUp,
-  FileSliders,
-  Check,
-  Frown,
-  Meh,
-  Smile,
-  Laugh,
-  ArrowLeft,
-} from "lucide-react";
+import { Check, Frown, Meh, Smile, Laugh, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
 import SurveyHeader from "@/components/survey-header/page";
@@ -151,11 +138,11 @@ export default function FormularioPesquisaClima2025() {
       {/* Cabeçalho */}
       <div className="mb-8">
         <SurveyHeader
-                      title="NPS - PJ"
-                      category="Serviços"
-                      categoryVariant="clima"
-                      deadline="13/01/2026"
-                    />
+          title="NPS - PJ"
+          category="Serviços"
+          categoryVariant="clima"
+          deadline="13/01/2026"
+        />
 
         {/* Progresso (0 → 100 quando seleciona NPS) */}
         <div className="mt-10">

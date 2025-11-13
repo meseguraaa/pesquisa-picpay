@@ -1,17 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  House,
-  FolderGit,
-  FileUp,
-  FileSliders,
-  Check,
-  ArrowRight,
-  ArrowLeft,
-} from "lucide-react";
+import { Check, ArrowRight, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
 import SurveyHeader from "@/components/survey-header/page";
@@ -275,11 +265,11 @@ export default function FormularioPrimeiraLiderancaT01() {
       {/* Cabeçalho */}
       <div className="mb-8">
         <SurveyHeader
-                            title="Primeira Liderança - T01"
-                            category="Treinamento"
-                            categoryVariant="clima"
-                            deadline="07/12/2025"
-                          />
+          title="Primeira Liderança - T01"
+          category="Treinamento"
+          categoryVariant="clima"
+          deadline="07/12/2025"
+        />
 
         {/* Progresso + Voltar */}
         <div className="mt-10">

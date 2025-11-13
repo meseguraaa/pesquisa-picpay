@@ -1,18 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  House,
-  FolderGit,
-  FileUp,
-  FileSliders,
-  Check,
-  ArrowRight,
-  ArrowLeft,
-  Star,
-} from "lucide-react";
+import { Check, ArrowRight, ArrowLeft, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PageMain } from "@/components/layout/page";
 import SurveyHeader from "@/components/survey-header/page";
@@ -241,11 +230,11 @@ export default function FormularioTreinamentoAVD() {
       {/* Cabeçalho */}
       <div className="mb-8">
         <SurveyHeader
-                                  title="Treinamento AVD"
-                                  category="Treinamento"
-                                  categoryVariant="clima"
-                                  deadline="30/03/2026"
-                                />
+          title="Treinamento AVD"
+          category="Treinamento"
+          categoryVariant="clima"
+          deadline="30/03/2026"
+        />
 
         {/* Progresso + Voltar */}
         <div className="mt-10">

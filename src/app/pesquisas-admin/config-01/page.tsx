@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
+import { useRouter } from "next/navigation";
 
 // ------ Tipos & Mock ------
 type PesquisaConfig01 = {
@@ -114,6 +115,7 @@ export default function PesquisasAdminConfig01Page() {
 
   const handleEditar = (id: string) =>
     console.log("Editar item (pesquisas-config-01):", id);
+  const router = useRouter();
 
   return (
     <PageMain>
@@ -131,8 +133,10 @@ export default function PesquisasAdminConfig01Page() {
                 </p>
               </div>
 
-              {/* Botão simples, sem modal/validações */}
-              <Button className="gap-2 whitespace-nowrap">
+              <Button
+                className="gap-2 whitespace-nowrap"
+                onClick={() => router.push("/pesquisas-admin/config-02")}
+              >
                 Adicionar <Plus size={16} />
               </Button>
             </div>
