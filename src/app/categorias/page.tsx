@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, X } from "lucide-react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,12 @@ import {
 } from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 // ------ Tipos & Mock ------
 type Categoria = {
@@ -93,23 +98,14 @@ export default function PesquisasAdminConfig01Page() {
                   Adicionar <Plus size={16} />
                 </Button>
 
-                <DialogContent
-                  className="max-w-xl w-full rounded-[15px] p-8"
-                  showCloseButton={false}
-                >
-                  {/* X único */}
-                  <button
-                    type="button"
-                    className="absolute right-6 top-6 inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100"
-                    onClick={() => setIsDialogOpen(false)}
-                  >
-                    <X size={18} />
-                  </button>
+                <DialogContent className="max-w-xl w-full rounded-[15px] p-8">
+                  <DialogHeader className="mb-4">
+                    <DialogTitle className="text-xl font-semibold text-black">
+                      Adicionar categoria
+                    </DialogTitle>
+                  </DialogHeader>
 
-                  <h2 className="text-xl font-semibold text-black mb-6">
-                    Adicionar categoria
-                  </h2>
-
+                  {/* Campo */}
                   <div className="w-full mb-6">
                     <Input
                       placeholder="Digite o nome da categoria"
@@ -119,6 +115,7 @@ export default function PesquisasAdminConfig01Page() {
                     />
                   </div>
 
+                  {/* Botão Confirmar */}
                   <div className="w-full flex justify-end">
                     <Button onClick={handleConfirmar}>Confirmar</Button>
                   </div>
