@@ -15,48 +15,105 @@ import {
 import { PageMain } from "@/components/layout/page";
 
 // ------ Tipos & Mock ------
-type Categoria = {
+type PesquisaConfig01 = {
   id: string;
   nome: string;
   criadoPor: string;
   data: string;
-  utilizada: boolean;
+  status: boolean;
   quantidade: number;
 };
 
-const CATEGORIAS_MOCK: Categoria[] = [
+const PESQUISAS_CONFIG01_MOCK: PesquisaConfig01[] = [
   {
     id: "1",
-    nome: "Clima Organizacional",
+    nome: "Pesquisa de Clima - 2025",
     criadoPor: "Bruno Hernandes Leal",
-    data: "12/11/2025",
-    utilizada: true,
-    quantidade: 1,
+    data: "10/11/2025",
+    status: true,
+    quantidade: 5.798,
   },
   {
     id: "2",
-    nome: "Serviço",
+    nome: "Primeira Liderança - T01",
     criadoPor: "Nataly Barreto",
-    data: "30/10/2025",
-    utilizada: true,
-    quantidade: 1,
+    data: "31/10/2025",
+    status: true,
+    quantidade: 27,
   },
   {
     id: "3",
-    nome: "Treinamento",
+    nome: "NPS - PJ",
     criadoPor: "Leonardo Zimmermann",
-    data: "23/10/2025",
-    utilizada: true,
-    quantidade: 2,
+    data: "22/10/2025",
+    status: true,
+    quantidade: 876,
+  },
+  {
+    id: "4",
+    nome: "Treinamento AVD",
+    criadoPor: "Leonardo Zimmermann",
+    data: "09/10/2025",
+    status: true,
+    quantidade: 1.231,
+  },
+  {
+    id: "5",
+    nome: "Onboarding de Novos Colaboradores",
+    criadoPor: "Fabio Adriano Pereira",
+    data: "25/9/2025",
+    status: false,
+    quantidade: 45,
+  },
+  {
+    id: "6",
+    nome: "Comunicação Interna",
+    criadoPor: "Karine Nascimento",
+    data: "19/08/2025",
+    status: false,
+    quantidade: 5.433,
+  },
+  {
+    id: "7",
+    nome: "Saúde e Bem-Estar",
+    criadoPor: "Alencar Petroli",
+    data: "19/08/2025",
+    status: false,
+    quantidade: 5.433,
+  },
+  {
+    id: "8",
+    nome: "Inovação e Melhoria Contínua",
+    criadoPor: "Nataly Barreto",
+    data: "02/08/2025",
+    status: false,
+    quantidade: 398,
+  },
+  {
+    id: "9",
+    nome: "Atendimento ao Cliente",
+    criadoPor: "Bruno Hernandes Leal",
+    data: "17/07/2025",
+    status: false,
+    quantidade: 398,
+  },
+  {
+    id: "10",
+    nome: "Diversidade e Inclusão",
+    criadoPor: "Priscilla Vieira",
+    data: "01/07/2025",
+    status: false,
+    quantidade: 556,
   },
 ];
 
 // ------ Página ------
 // Renomeado conforme pedido
 export default function PesquisasAdminConfig01Page() {
-  const [categorias] = useState<Categoria[]>(CATEGORIAS_MOCK);
+  const [itens] = useState<PesquisaConfig01[]>(PESQUISAS_CONFIG01_MOCK);
 
-  const handleEditar = (id: string) => console.log("Editar categoria:", id);
+  const handleEditar = (id: string) =>
+    console.log("Editar item (pesquisas-config-01):", id);
 
   return (
     <PageMain>
@@ -67,10 +124,10 @@ export default function PesquisasAdminConfig01Page() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
-                  Categorias
+                  Pesquisas
                 </h1>
                 <p className="text-black text-left">
-                  Crie as categorias que serão associadas às pesquisas-colaborador.
+                  Gerencie as configurações da pesquisa.
                 </p>
               </div>
 
@@ -94,38 +151,42 @@ export default function PesquisasAdminConfig01Page() {
                       Criado por
                     </TableHead>
                     <TableHead className="w-[14%] text-center text-black font-medium text-base">
-                      Data
+                      Data de criação
                     </TableHead>
                     <TableHead className="w-[14%] text-center text-black font-medium text-base">
-                      Utilizada
+                      Stauts
                     </TableHead>
                     <TableHead className="w-[10%] text-center text-black font-medium text-base">
-                      Quantidade
+                      Qtd. de pessoas
                     </TableHead>
                     <TableHead className="w-[6%]" />
                   </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                  {categorias.map((cat) => (
+                  {itens.map((pes) => (
                     <TableRow
-                      key={cat.id}
+                      key={pes.id}
                       className="border-b border-[#F5F5F5] hover:bg-transparent transition-none text-base"
                     >
                       <TableCell className="text-left text-black pl-0">
-                        {cat.nome}
+                        {pes.nome}
                       </TableCell>
                       <TableCell className="text-left text-black">
-                        {cat.criadoPor}
+                        {pes.criadoPor}
                       </TableCell>
                       <TableCell className="text-center text-black">
-                        {cat.data}
+                        {pes.data}
+                      </TableCell>
+                      <TableCell
+                        className={`text-center ${
+                          pes.status ? "text-[#21C25E]" : "text-[#DC2626]"
+                        }`}
+                      >
+                        {pes.status ? "Ativa" : "Inativa"}
                       </TableCell>
                       <TableCell className="text-center text-black">
-                        {cat.utilizada ? "Sim" : "Não"}
-                      </TableCell>
-                      <TableCell className="text-center text-black">
-                        {cat.quantidade}
+                        {pes.quantidade}
                       </TableCell>
 
                       <TableCell className="text-right">
@@ -134,8 +195,8 @@ export default function PesquisasAdminConfig01Page() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            onClick={() => handleEditar(cat.id)}
-                            aria-label={`Editar ${cat.nome}`}
+                            onClick={() => handleEditar(pes.id)}
+                            aria-label={`Editar ${pes.nome} (config-01)`}
                           >
                             <Pencil size={16} />
                           </Button>
@@ -144,7 +205,7 @@ export default function PesquisasAdminConfig01Page() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            aria-label={`Excluir ${cat.nome}`}
+                            aria-label={`Excluir ${pes.nome} (config-01)`}
                           >
                             <Trash2 size={16} />
                           </Button>

@@ -15,7 +15,7 @@ export default function ClientLayoutShell({
   const navItems = [
     { label: "Home", href: "/", Icon: House },
     { label: "Categoria", href: "/categorias", Icon: FolderGit },
-    { label: "Pesquisa", href: "/", Icon: FileUp },
+    { label: "Pesquisa", href: "/pesquisas-admin/config-01", Icon: FileUp },
     { label: "Relatório", href: "/", Icon: FileSliders },
   ];
 
