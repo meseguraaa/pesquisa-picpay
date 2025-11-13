@@ -1,4 +1,5 @@
 "use client";
+
 import { useMemo, useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -12,6 +13,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { Toaster } from "sonner";
+
 type Categoria = {
   id: string;
   nome: string;
@@ -20,6 +33,7 @@ type Categoria = {
   utilizada: boolean;
   quantidade: number;
 };
+
 const CATEGORIAS_MOCK: Categoria[] = [
   {
     id: "1",
@@ -46,11 +60,32 @@ const CATEGORIAS_MOCK: Categoria[] = [
     quantidade: 2,
   },
 ];
+
 export default function CategoriasPage() {
   const [categorias] = useState<Categoria[]>(CATEGORIAS_MOCK);
+
+  const [openAdd, setOpenAdd] = useState(false);
+  const [novoNome, setNovoNome] = useState("");
+
   const total = useMemo(() => categorias.length, [categorias]);
-  const handleAdicionar = () => console.log("Adicionar categoria");
+
   const handleEditar = (id: string) => console.log("Editar categoria:", id);
+
+  const handleConfirmarAdicionar = () => {
+    const nome = novoNome.trim();
+
+    toast("Categoria adicionada", {
+      description:
+        "Agora você pode utilizar essa categoria na criação de pesquisas.",
+      type: "success",
+    });
+
+    setNovoNome("");
+    setOpenAdd(false);
+  };
+
+  const nomeValido = novoNome.trim().length >= 3;
+
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
@@ -59,62 +94,103 @@ export default function CategoriasPage() {
             <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
               Categorias
             </h1>
+
             <div className="flex items-center justify-between text-left">
               <p className="text-black">
-                Crie as categorias que serão associadas às pesquisas-colaborador.
+                Crie as categorias que serão associadas às
+                pesquisas-colaborador.
               </p>
-              <Button
-                onClick={handleAdicionar}
-                className="gap-2 whitespace-nowrap"
-              >
-                Adicionar <Plus size={16} />
-              </Button>
+
+              <Dialog open={openAdd} onOpenChange={setOpenAdd}>
+                <DialogTrigger asChild>
+                  <Button className="gap-2 whitespace-nowrap">
+                    Adicionar <Plus size={16} />
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent className="max-w-xl rounded-2xl p-8">
+                  <DialogHeader>
+                    <DialogTitle className="text-xl">
+                      Adicionar categoria
+                    </DialogTitle>
+                  </DialogHeader>
+
+                  <div className="mt-4">
+                    <Input
+                      placeholder="Digite o nome da categoria"
+                      value={novoNome}
+                      onChange={(e) => setNovoNome(e.target.value)}
+                      className="h-11 text-base"
+                    />
+
+                    {/* 🔥 SOMENTE EXIBE SE FOR MENOR QUE 3 CARACTERES */}
+                    {!nomeValido && (
+                      <p className="mt-2 text-xs text-gray-500">
+                        Mínimo de 3 caracteres.
+                      </p>
+                    )}
+                  </div>
+
+                  <DialogFooter className="mt-6">
+                    <Button
+                      onClick={handleConfirmarAdicionar}
+                      disabled={!nomeValido}
+                      className="px-6 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      Confirmar
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </CardHeader>
+
           <CardContent className="p-0">
             <div className="w-full overflow-x-auto rounded-[12px]">
               <Table className="w-full border-collapse text-base">
                 <TableHeader>
                   <TableRow className="hover:bg-transparent border-b-2 border-[#D9D9D9]">
-                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium pl-0 text-base">
+                    <TableHead className="w-[28%] text-left text-black font-medium pl-0 text-base">
                       Nome
                     </TableHead>
-                    <TableHead className="w-[28%] min-w-[200px] text-left text-black font-medium text-base">
+                    <TableHead className="w-[28%] text-left text-black font-medium text-base">
                       Criado por
                     </TableHead>
-                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium text-base">
+                    <TableHead className="w-[14%] text-center text-black font-medium text-base">
                       Data
                     </TableHead>
-                    <TableHead className="w-[14%] min-w-[120px] text-center text-black font-medium text-base">
+                    <TableHead className="w-[14%] text-center text-black font-medium text-base">
                       Utilizada
                     </TableHead>
-                    <TableHead className="w-[10%] min-w-[100px] text-center text-black font-medium text-base">
+                    <TableHead className="w-[10%] text-center text-black font-medium text-base">
                       Quantidade
                     </TableHead>
-                    <TableHead className="w-[6%] min-w-[90px]" />
+                    <TableHead className="w-[6%]" />
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
                   {categorias.map((cat) => (
                     <TableRow
                       key={cat.id}
                       className="border-b border-[#F5F5F5] hover:bg-transparent transition-none text-base"
                     >
-                      <TableCell className="font-normal text-left text-black pl-0 text-base">
+                      <TableCell className="text-left text-black pl-0">
                         {cat.nome}
                       </TableCell>
-                      <TableCell className="text-left text-black text-base">
+                      <TableCell className="text-left text-black">
                         {cat.criadoPor}
                       </TableCell>
-                      <TableCell className="text-center text-black text-base">
+                      <TableCell className="text-center text-black">
                         {cat.data}
                       </TableCell>
-                      <TableCell className="text-center text-black text-base">
+                      <TableCell className="text-center text-black">
                         {cat.utilizada ? "Sim" : "Não"}
                       </TableCell>
-                      <TableCell className="text-center text-black text-base">
+                      <TableCell className="text-center text-black">
                         {cat.quantidade}
                       </TableCell>
+
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end gap-2">
                           <Button
@@ -122,15 +198,14 @@ export default function CategoriasPage() {
                             size="icon"
                             className="h-8 w-8"
                             onClick={() => handleEditar(cat.id)}
-                            title="Editar"
                           >
                             <Pencil size={16} />
                           </Button>
+
                           <Button
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8"
-                            title="Excluir"
                           >
                             <Trash2 size={16} />
                           </Button>
@@ -143,6 +218,8 @@ export default function CategoriasPage() {
             </div>
           </CardContent>
         </Card>
+
+        <Toaster position="top-center" richColors closeButton />
       </div>
     </PageMain>
   );
