@@ -1,227 +1,359 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { PageMain } from "@/components/layout/page";
-import { useRouter } from "next/navigation";
 
-// ------ Tipos & Mock ------
-type PesquisaConfig01 = {
-  id: string;
-  nome: string;
-  criadoPor: string;
-  data: string;
-  status: boolean;
-  quantidade: number;
-};
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
+import router from "next/router";
+import Link from "next/link";
 
-const PESQUISAS_CONFIG01_MOCK: PesquisaConfig01[] = [
-  {
-    id: "1",
-    nome: "Pesquisa de Clima - 2025",
-    criadoPor: "Bruno Hernandes Leal",
-    data: "10/11/2025",
-    status: true,
-    quantidade: 5.798,
-  },
-  {
-    id: "2",
-    nome: "Primeira Liderança - T01",
-    criadoPor: "Nataly Barreto",
-    data: "31/10/2025",
-    status: true,
-    quantidade: 27,
-  },
-  {
-    id: "3",
-    nome: "NPS - PJ",
-    criadoPor: "Leonardo Zimmermann",
-    data: "22/10/2025",
-    status: true,
-    quantidade: 876,
-  },
-  {
-    id: "4",
-    nome: "Treinamento AVD",
-    criadoPor: "Leonardo Zimmermann",
-    data: "09/10/2025",
-    status: true,
-    quantidade: 1.231,
-  },
-  {
-    id: "5",
-    nome: "Onboarding de Novos Colaboradores",
-    criadoPor: "Fabio Adriano Pereira",
-    data: "25/9/2025",
-    status: false,
-    quantidade: 45,
-  },
-  {
-    id: "6",
-    nome: "Comunicação Interna",
-    criadoPor: "Karine Nascimento",
-    data: "19/08/2025",
-    status: false,
-    quantidade: 5.433,
-  },
-  {
-    id: "7",
-    nome: "Saúde e Bem-Estar",
-    criadoPor: "Alencar Petroli",
-    data: "19/08/2025",
-    status: false,
-    quantidade: 5.433,
-  },
-  {
-    id: "8",
-    nome: "Inovação e Melhoria Contínua",
-    criadoPor: "Nataly Barreto",
-    data: "02/08/2025",
-    status: false,
-    quantidade: 398,
-  },
-  {
-    id: "9",
-    nome: "Atendimento ao Cliente",
-    criadoPor: "Bruno Hernandes Leal",
-    data: "17/07/2025",
-    status: false,
-    quantidade: 398,
-  },
-  {
-    id: "10",
-    nome: "Diversidade e Inclusão",
-    criadoPor: "Priscilla Vieira",
-    data: "01/07/2025",
-    status: false,
-    quantidade: 556,
-  },
-];
+export default function PesquisasAdminConfig02Page() {
+  const [descricaoBreve, setDescricaoBreve] = useState("");
+  const [descricaoCompleta, setDescricaoCompleta] = useState("");
+  const [mensagemEncerramento, setMensagemEncerramento] = useState("");
 
-// ------ Página ------
-// Renomeado conforme pedido
-export default function PesquisasAdminConfig01Page() {
-  const [itens] = useState<PesquisaConfig01[]>(PESQUISAS_CONFIG01_MOCK);
+  const descricaoBreveValida = descricaoBreve.trim().length >= 3;
+  const descricaoCompletaValida = descricaoCompleta.trim().length >= 3;
+  const mensagemEncerramentoValida = mensagemEncerramento.trim().length >= 3;
 
-  const handleEditar = (id: string) =>
-    console.log("Editar item (pesquisas-config-01):", id);
-  const router = useRouter();
+  // classe padrão para inputs/selects/textarea com foco verde
+  const focusGreen =
+    "bg-white border-black " +
+    "focus:border-[#21C25E] focus:ring-2 focus:ring-[#21C25E] focus:outline-none " +
+    "focus-visible:border-[#21C25E] focus-visible:ring-2 focus-visible:ring-[#21C25E] focus-visible:outline-none";
 
   return (
     <PageMain>
       <div className="w-full max-w-6xl">
-        {/* Cabeçalho + ação (layout da imagem) */}
-        <Card className="bg-white shadow-none border-none">
-          <CardHeader className="p-0 mb-2">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
-                  Pesquisas
-                </h1>
-                <p className="text-black text-left">
-                  Gerencie as configurações da pesquisa.
-                </p>
+        {/* Cabeçalho */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2 text-left">
+              Pesquisas
+            </h1>
+          </div>
+        </div>
+
+        {/* Card principal */}
+        <div className="bg-white mt-6">
+          {/* Stepper */}
+          <div className="w-full">
+            {/* LINHA SUPERIOR: linha + círculos */}
+            <div className="flex items-center justify-between w-full">
+              {[
+                { step: 1, label: "Configuração" },
+                { step: 2, label: "Perguntas" },
+                { step: 3, label: "Disponibilizar" },
+              ].map((item, index, arr) => (
+                <div key={item.step} className="flex-1 flex items-center">
+                  {/* linha esquerda */}
+                  {index !== 0 && <div className="h-px bg-zinc-300 flex-1" />}
+
+                  {/* círculo */}
+                  <div className="mx-3 shrink-0">
+                    <div
+                      className={`flex h-8 w-8 items-center justify-center rounded-full border text-sm font-medium ${
+                        item.step === 1
+                          ? "border-black bg-black text-white"
+                          : "border-zinc-300 text-zinc-700"
+                      }`}
+                    >
+                      {item.step}
+                    </div>
+                  </div>
+
+                  {/* linha direita */}
+                  {index !== arr.length - 1 && (
+                    <div className="h-px bg-zinc-300 flex-1" />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* LINHA INFERIOR: textos alinhados embaixo dos círculos */}
+            <div className="flex justify-between mt-2 w-full">
+              {[
+                { step: 1, label: "Configuração" },
+                { step: 2, label: "Perguntas" },
+                { step: 3, label: "Disponibilizar" },
+              ].map((item, index, arr) => (
+                <div
+                  key={item.step}
+                  className={`flex-1 flex ${
+                    index === 0
+                      ? "justify-start"
+                      : index === arr.length - 1
+                      ? "justify-end"
+                      : "justify-center"
+                  }`}
+                >
+                  <span
+                    className={`text-xs font-medium text-zinc-800 text-center ${
+                      index === 0
+                        ? "ml-3"
+                        : index === arr.length - 1
+                        ? "mr-3"
+                        : ""
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Formulário */}
+          <div className="space-y-6 mt-8">
+            {/* Criador */}
+            <div className="space-y-1.5">
+              <Label htmlFor="criador">Criador</Label>
+              <Select defaultValue="bruno">
+                <SelectTrigger
+                  id="criador"
+                  className={`w-full border-black ${focusGreen}`}
+                >
+                  <SelectValue placeholder="Selecione o criador" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bruno">Bruno Hernandes Leal</SelectItem>
+                  <SelectItem value="outro">Outro usuário</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Nome */}
+            <div className="space-y-1.5">
+              <Label htmlFor="nome">
+                Nome<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <Input
+                id="nome"
+                placeholder="Digite o nome da pesquisa"
+                className={focusGreen}
+              />
+            </div>
+
+            {/* Imagem */}
+            <div className="space-y-1.5">
+              <Label htmlFor="imagem">
+                Imagem<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <Input
+                  id="imagem"
+                  placeholder="Envie sua imagem de capa"
+                  className={`flex-1 ${focusGreen}`}
+                  readOnly
+                />
+                <Button type="button" className="gap-2 whitespace-nowrap">
+                  Adicionar <Plus size={16} />
+                </Button>
+              </div>
+              <p className="text-[11px] text-zinc-500">
+                Largura 1134 x 637 pixels
+              </p>
+            </div>
+
+            {/* Datas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="dataInicio">
+                  Data de início<span className="text-red-500 ml-0.5">*</span>
+                </Label>
+                <div className="relative">
+                  <Input id="dataInicio" type="date" className={focusGreen} />
+                </div>
               </div>
 
-              <Button
-                className="gap-2 whitespace-nowrap"
-                onClick={() => router.push("/pesquisas-admin/config-02")}
+              <div className="space-y-1.5">
+                {/* SEM asterisco, não obrigatória */}
+                <Label htmlFor="dataFim">Data de fim</Label>
+                <div className="relative">
+                  <Input id="dataFim" type="date" className={focusGreen} />
+                </div>
+              </div>
+            </div>
+
+            {/* Categoria */}
+            <div className="space-y-1.5">
+              <Label htmlFor="categoria">
+                Categoria<span className="text-red-500 ml-0.5">*</span>
+              </Label>
+              <Select>
+                <SelectTrigger
+                  id="categoria"
+                  className={`w-full border-black ${focusGreen}`}
+                >
+                  <SelectValue placeholder="Selecione uma categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="clima">Clima Organizacional</SelectItem>
+                  <SelectItem value="treinamento">Serviço</SelectItem>
+                  <SelectItem value="outros">Treinamento</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Descrição breve */}
+            <div className="space-y-1.5">
+              <Label htmlFor="descricaoBreve">Descrição breve</Label>
+              <Textarea
+                id="descricaoBreve"
+                maxLength={120}
+                value={descricaoBreve}
+                onChange={(e) => setDescricaoBreve(e.target.value)}
+                placeholder="Digite a descrição breve da pesquisa"
+                className={`min-h-24 resize-none ${focusGreen}`}
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    descricaoBreveValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
+                >
+                  Escreva pelo menos 3 caracteres.
+                </span>
+                <span
+                  className={
+                    descricaoBreve.length >= 120
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
+                >
+                  {descricaoBreve.length} / 120
+                </span>
+              </div>
+            </div>
+
+            {/* Descrição completa */}
+            <div className="space-y-1.5">
+              <Label htmlFor="descricaoCompleta">Descrição completa</Label>
+              <Textarea
+                id="descricaoCompleta"
+                maxLength={1000}
+                value={descricaoCompleta}
+                onChange={(e) => setDescricaoCompleta(e.target.value)}
+                placeholder="Digite a descrição completa da pesquisa"
+                className={`min-h-[140px] resize-none ${focusGreen}`}
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    descricaoCompletaValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
+                >
+                  Escreva pelo menos 3 caracteres.
+                </span>
+                <span
+                  className={
+                    descricaoCompleta.length >= 1000
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
+                >
+                  {descricaoCompleta.length} / 1000
+                </span>
+              </div>
+            </div>
+
+            {/* Mensagem de encerramento */}
+            <div className="space-y-1.5">
+              <Label htmlFor="mensagemEncerramento">
+                Mensagem de encerramento
+              </Label>
+              <Textarea
+                id="mensagemEncerramento"
+                maxLength={1000}
+                value={mensagemEncerramento}
+                onChange={(e) => setMensagemEncerramento(e.target.value)}
+                placeholder="Digite a mensagem de encerramento"
+                className={`min-h-[120px] resize-none ${focusGreen}`}
+              />
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span
+                  className={
+                    mensagemEncerramentoValida
+                      ? "opacity-0 select-none"
+                      : "text-gray-500 transition-opacity"
+                  }
+                >
+                  Escreva pelo menos 3 caracteres.
+                </span>
+                <span
+                  className={
+                    mensagemEncerramento.length >= 1000
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }
+                >
+                  {mensagemEncerramento.length} / 1000
+                </span>
+              </div>
+            </div>
+
+            {/* Tipo de disponibilização */}
+            <div className="space-y-2">
+              <Label>Tipo de disponibilização</Label>
+              <RadioGroup
+                defaultValue="hierarquia"
+                className="flex flex-wrap gap-6"
               >
-                Adicionar <Plus size={16} />
-              </Button>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="hierarquia" id="hierarquia" />
+                  <Label htmlFor="hierarquia" className="font-normal">
+                    Hierarquia
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="cpf" id="cpf" />
+                  <Label htmlFor="cpf" className="font-normal">
+                    CPF
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
-          </CardHeader>
 
-          {/* Tabela */}
-          <CardContent className="p-0">
-            <div className="w-full overflow-x-auto rounded-[12px]">
-              <Table className="w-full border-collapse text-base">
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent border-b-2 border-[#D9D9D9]">
-                    <TableHead className="w-[28%] text-left text-black font-medium pl-0 text-base">
-                      Nome
-                    </TableHead>
-                    <TableHead className="w-[28%] text-left text-black font-medium text-base">
-                      Criado por
-                    </TableHead>
-                    <TableHead className="w-[14%] text-center text-black font-medium text-base">
-                      Data de criação
-                    </TableHead>
-                    <TableHead className="w-[14%] text-center text-black font-medium text-base">
-                      Stauts
-                    </TableHead>
-                    <TableHead className="w-[10%] text-center text-black font-medium text-base">
-                      Qtd. de pessoas
-                    </TableHead>
-                    <TableHead className="w-[6%]" />
-                  </TableRow>
-                </TableHeader>
+            {/* Ações */}
+            <div className="pt-4 w-full flex justify-end mb-8">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="border-black text-black bg-white hover:bg-gray-100 rounded-[10px] px-6"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Voltar
+                </Button>
 
-                <TableBody>
-                  {itens.map((pes) => (
-                    <TableRow
-                      key={pes.id}
-                      className="border-b border-[#F5F5F5] hover:bg-transparent transition-none text-base"
-                    >
-                      <TableCell className="text-left text-black pl-0">
-                        {pes.nome}
-                      </TableCell>
-                      <TableCell className="text-left text-black">
-                        {pes.criadoPor}
-                      </TableCell>
-                      <TableCell className="text-center text-black">
-                        {pes.data}
-                      </TableCell>
-                      <TableCell
-                        className={`text-center ${
-                          pes.status ? "text-[#21C25E]" : "text-[#DC2626]"
-                        }`}
-                      >
-                        {pes.status ? "Ativa" : "Inativa"}
-                      </TableCell>
-                      <TableCell className="text-center text-black">
-                        {pes.quantidade}
-                      </TableCell>
-
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => handleEditar(pes.id)}
-                            aria-label={`Editar ${pes.nome} (config-01)`}
-                          >
-                            <Pencil size={16} />
-                          </Button>
-
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            aria-label={`Excluir ${pes.nome} (config-01)`}
-                          >
-                            <Trash2 size={16} />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                <Link href="/pesquisas-admin/config-02">
+                  <Button
+                    type="button"
+                    className="rounded-[10px] bg-[#333333] text-white hover:bg-[#222222] flex items-center justify-center gap-2 px-6"
+                  >
+                    Continuar <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </PageMain>
   );
