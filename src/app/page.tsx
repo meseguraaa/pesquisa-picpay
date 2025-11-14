@@ -184,7 +184,7 @@ export default function Home() {
       </section>
 
       {/* Não respondidas dentro do prazo */}
-      <section className="mt-8">
+      <section className="mt-8 mb-8">
         <h2 className="text-2xl font-semibold mb-4">
           Não respondidas dentro do prazo
         </h2>
