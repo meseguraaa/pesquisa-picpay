@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/pesquisas/layout,_N_T_/pesquisas/nps-pj/layout,_N_T_/pesquisas/nps-pj/page,_N_T_/pesquisas/nps-pj"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/pesquisas/nps-pj/__PAGE__",
+    "/pesquisas/nps-pj",
+    "/pesquisas",
+    "/_index"
+  ]
+}

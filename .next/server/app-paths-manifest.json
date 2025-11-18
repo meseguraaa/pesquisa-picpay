@@ -1,0 +1,18 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/pesquisas/nps-pj/encerramento/page": "app/pesquisas/nps-pj/encerramento/page.js",
+  "/pesquisas/pesquisa-clima-2025/page": "app/pesquisas/pesquisa-clima-2025/page.js",
+  "/pesquisas/pesquisa-clima-2025/formulario/page": "app/pesquisas/pesquisa-clima-2025/formulario/page.js",
+  "/pesquisas/pesquisa-clima-2025/encerramento/page": "app/pesquisas/pesquisa-clima-2025/encerramento/page.js",
+  "/pesquisas/nps-pj/formulario/page": "app/pesquisas/nps-pj/formulario/page.js",
+  "/pesquisas/primeira-lideranca-t01/encerramento/page": "app/pesquisas/primeira-lideranca-t01/encerramento/page.js",
+  "/pesquisas/nps-pj/page": "app/pesquisas/nps-pj/page.js",
+  "/pesquisas/primeira-lideranca-t01/page": "app/pesquisas/primeira-lideranca-t01/page.js",
+  "/pesquisas/treinamento-avd/formulario/page": "app/pesquisas/treinamento-avd/formulario/page.js",
+  "/pesquisas/treinamento-avd/encerramento/page": "app/pesquisas/treinamento-avd/encerramento/page.js",
+  "/pesquisas/primeira-lideranca-t01/formulario/page": "app/pesquisas/primeira-lideranca-t01/formulario/page.js",
+  "/pesquisas/treinamento-avd/page": "app/pesquisas/treinamento-avd/page.js",
+  "/page": "app/page.js"
+}

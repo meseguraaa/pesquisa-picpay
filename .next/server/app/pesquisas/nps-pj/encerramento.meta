@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/pesquisas/layout,_N_T_/pesquisas/nps-pj/layout,_N_T_/pesquisas/nps-pj/encerramento/layout,_N_T_/pesquisas/nps-pj/encerramento/page,_N_T_/pesquisas/nps-pj/encerramento"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/pesquisas/nps-pj/encerramento/__PAGE__",
+    "/pesquisas/nps-pj/encerramento",
+    "/pesquisas/nps-pj",
+    "/pesquisas",
+    "/_index"
+  ]
+}

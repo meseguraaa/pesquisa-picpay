@@ -1,0 +1,140 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/nps-pj",
+      "regex": "^/pesquisas/nps\\-pj(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/nps\\-pj(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/nps-pj/encerramento",
+      "regex": "^/pesquisas/nps\\-pj/encerramento(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/nps\\-pj/encerramento(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/nps-pj/formulario",
+      "regex": "^/pesquisas/nps\\-pj/formulario(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/nps\\-pj/formulario(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/pesquisa-clima-2025",
+      "regex": "^/pesquisas/pesquisa\\-clima\\-2025(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/pesquisa\\-clima\\-2025(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/pesquisa-clima-2025/encerramento",
+      "regex": "^/pesquisas/pesquisa\\-clima\\-2025/encerramento(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/pesquisa\\-clima\\-2025/encerramento(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/pesquisa-clima-2025/formulario",
+      "regex": "^/pesquisas/pesquisa\\-clima\\-2025/formulario(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/pesquisa\\-clima\\-2025/formulario(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/primeira-lideranca-t01",
+      "regex": "^/pesquisas/primeira\\-lideranca\\-t01(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/primeira\\-lideranca\\-t01(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/primeira-lideranca-t01/encerramento",
+      "regex": "^/pesquisas/primeira\\-lideranca\\-t01/encerramento(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/primeira\\-lideranca\\-t01/encerramento(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/primeira-lideranca-t01/formulario",
+      "regex": "^/pesquisas/primeira\\-lideranca\\-t01/formulario(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/primeira\\-lideranca\\-t01/formulario(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/treinamento-avd",
+      "regex": "^/pesquisas/treinamento\\-avd(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/treinamento\\-avd(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/treinamento-avd/encerramento",
+      "regex": "^/pesquisas/treinamento\\-avd/encerramento(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/treinamento\\-avd/encerramento(?:/)?$"
+    },
+    {
+      "page": "/pesquisas/treinamento-avd/formulario",
+      "regex": "^/pesquisas/treinamento\\-avd/formulario(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pesquisas/treinamento\\-avd/formulario(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

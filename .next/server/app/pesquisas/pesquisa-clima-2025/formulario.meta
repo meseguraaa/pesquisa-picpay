@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/pesquisas/layout,_N_T_/pesquisas/pesquisa-clima-2025/layout,_N_T_/pesquisas/pesquisa-clima-2025/formulario/layout,_N_T_/pesquisas/pesquisa-clima-2025/formulario/page,_N_T_/pesquisas/pesquisa-clima-2025/formulario"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/pesquisas/pesquisa-clima-2025/formulario/__PAGE__",
+    "/pesquisas/pesquisa-clima-2025/formulario",
+    "/pesquisas/pesquisa-clima-2025",
+    "/pesquisas",
+    "/_index"
+  ]
+}
